@@ -1,0 +1,11 @@
+/node_modules
+/dist
+/demo
+
+/.env*
+.env*
+
+/drive/*
+
+/run.log
+/taken.txt
