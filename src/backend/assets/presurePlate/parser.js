@@ -60,6 +60,7 @@ const getGeo = (ip) => {
 
 const buildFingerprint = (n) => {
   const parts = [
+    n.group,
     n.ip,
     n.acceptLanguage,
     n.ua,
@@ -84,7 +85,7 @@ const withFingerprint = (rec)=>{
   return rec;
 }
 
-export const buildRecord = (ctx) => {
+export const buildRecord = (ctx, group) => {
   const { method, query, headers } = ctx;
 
   const ip = getClientIp(ctx);
@@ -100,6 +101,7 @@ export const buildRecord = (ctx) => {
     query,
     referrer,
     acceptLanguage,
+    group,
     ...ua,
     ...geo,
   });

@@ -15,7 +15,7 @@ export const presurePlate = (getKey = ()=>{}) => async (ctx, next) => {
   e.redirect = await matchRedirect(rId);
   if (!e.redirect) { return next(); }
 
-  e.record = buildRecord(ctx);
+  e.record = buildRecord(ctx, await e.redirect("group"));
 
   if (!e.redirect) { ctx.status = 404; return; }
   if (await e.redirect("closedAt")) { ctx.status = 410; return; }
