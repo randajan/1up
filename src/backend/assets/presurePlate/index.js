@@ -18,6 +18,7 @@ export const presurePlate = (getKey = ()=>{}) => async (ctx, next) => {
   e.record = buildRecord(ctx);
 
   if (!e.redirect) { ctx.status = 404; return; }
+  if (await e.redirect("closedAt")) { ctx.status = 410; return; }
 
   await attachRedirectUrl(e);
   await attachClient(e);
@@ -30,8 +31,10 @@ export const presurePlate = (getKey = ()=>{}) => async (ctx, next) => {
 
   if (!env.redirect.debug) {
     ctx.status = e.status;
-    ctx.body = `<html><script>location.replace("${e.redirectUrl}")</script><body><a href="${e.redirectUrl}">Click here</a></body></html>`;
-    if (e.status === 307) { ctx.set("Location", url); }
+    if (e.status === 307) {
+      ctx.body = `<html><script>location.replace("${e.redirectUrl}")</script><body><a href="${e.redirectUrl}">Click here</a></body></html>`;
+      ctx.set("Location", e.redirectUrl);
+    }
   } else {
     const acc = await accProm;
     e.redirect = await e.redirect?.saved.vals;

@@ -3,20 +3,19 @@ import { addToQueue } from "./queues.js";
 
 export const attachClient = async (e)=>{
     const { record, redirect } = e;
-    const { fingerprint } = record;
+    const { fingerprint:id } = record;
     const clients = await db("webClients");
-    //TODO ADD isBannedDef isIgnoredDef
-    e.client = await clients.rows.get(fingerprint, false);
+    e.client = await clients.rows.get(id, false);
     e.isUnique = !e.client;
     if (!e.isUnique) {
         [ e.isBanned, e.isIgnored ] = await e.client.eval(["isBanned", "isIgnored"]);
         return;
     }
 
-    [ e.isBanned, e.isIgnored ] = await e.redirect.eval(["isBannedDef", "isIgnoredDef"]);
+    [ e.isBanned, e.isIgnored ] = await redirect.eval(["isBannedDef", "isIgnoredDef"]);
 
     const { isBanned, isIgnored } = e;
-    e.client = await clients.rows.add({...record, isBanned, isIgnored });
+    e.client = await clients.rows.add({...record, id, isBanned, isIgnored });
 }
 
 export const logAccess = async (e) => {

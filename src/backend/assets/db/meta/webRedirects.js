@@ -2,7 +2,8 @@ import jet from "@randajan/jet-core";
 
 export default {
   id: { isPrimary: true, init: _ => Math.ceil(Number.jet.rnd(0, 9))+jet.uid(6) },
-
+  name:{},
+  desc:{},
   url: {},
 
   isIgnoredDef: { type:"boolean" },

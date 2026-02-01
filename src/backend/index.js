@@ -13,6 +13,10 @@ import { odataAuth } from "./assets/auth/index.js";
 
 const router = new Router();
 
+router.get("/admin", ctx=>{
+    ctx.status = 302;
+    ctx.set("Location", env.admin.url);
+});
 
 router.get("/:key", presurePlate(ctx=>{
     const key = ctx.params.key;

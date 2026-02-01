@@ -57,7 +57,7 @@ export const dbLoad = async _=>{
                 id:entName,
                 singular:entName.replace(/s$/, ""),
                 plural:entName,
-                options:["ADD", "UPDATE", "REMOVE"].join("; ")
+                options:["ADD", "EDIT", "REMOVE"].join("; ")
             });
         }
     }
