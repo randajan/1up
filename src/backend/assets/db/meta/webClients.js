@@ -2,23 +2,28 @@ import jet from "@randajan/jet-core";
 
 export default {
   id: { isPrimary: true, init: _ => jet.uid() },
+
+  createdAt: { type: "datetime", init: _ => new Date() },
   alias: { init:_=>`${String.jet.capitalize(String.jet.rnd(3, 6))} ${String.jet.capitalize(String.jet.rnd(3, 6))}` }, //náhodné jméno 
+  tags:{ separator:"; " },
 
   isIgnored:{ type:"boolean" },
+  isBanned:{ type:"boolean" },
 
   // source identity
   ip: {},
-  acceptLanguage: {},
   userAgent: {},
+  acceptLanguage: {},
 
   // UA breakdown (string)
-  deviceType: {},
-  deviceVendor: {},
-  deviceModel: {},
   osName: {},
   osVersion: {},
   browserName: {},
   browserVersion: {},
+  deviceType: {},
+  deviceVendor: {},
+  deviceModel: {},
+
 
   // geo (if available)
   geoCountry: {},
@@ -30,5 +35,4 @@ export default {
   geoAsn: {},
   geoOrg: {},
 
-  createdAt: { type: "datetime", init: _ => new Date() }
 };

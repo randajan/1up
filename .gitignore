@@ -9,3 +9,6 @@
 
 /run.log
 /taken.txt
+/available.txt
+/state.json
+/check.js

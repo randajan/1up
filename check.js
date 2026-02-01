@@ -76,7 +76,7 @@ function formatDuration(sec) {
 
 function buildLabels(charset) {
   const labels = [];
-  for (const a of charset) for (const b of charset) labels.push(a + b);
+  for (const a of charset) for (const b of charset) for (const c of charset) labels.push(a + b + c);
   return labels;
 }
 

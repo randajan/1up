@@ -9,22 +9,19 @@ import { presurePlate } from "./assets/presurePlate/index.js";
 
 import { odata } from "./assets/db/odata.js";
 
-
-app.use(presurePlate(ctx=>{
-    return ctx.path?.startsWith("/$odata");
-}));
-
 const router = new Router();
 
-router.use(koaBody());
+router.get("/:key", presurePlate(ctx=>{
+    const key = ctx.params.key;
+    if (!isNaN(Number(key[0]))) { return key; }
+}));
 
-router.all("/$odata/appsheet/:s*", odata.serve(odataResponder, env.home+"/$odata/appsheet", { tzWorkaround: true, useTimespan: true }));
-router.all("/$odata/raws/:s*", odata.serve(odataResponder, env.home+"/$odata/raws"));
-router.all("/$odata/vals/:s*", odata.serve(odataResponder, env.home+"/$odata/vals", { returnVals: true }));
+router.use("/api/odata", koaBody());
+router.all("/api/odata/appsheet/:s*", odata.serve(odataResponder, env.home+"/api/odata/appsheet", { tzWorkaround: true, useTimespan: true }));
+router.all("/api/odata/raws/:s*", odata.serve(odataResponder, env.home+"/api/odata/raws"));
+router.all("/api/odata/vals/:s*", odata.serve(odataResponder, env.home+"/api/odata/vals", { returnVals: true }));
 
 app.use(router.routes()).use(router.allowedMethods());
 
 be.start(env.port);
-
-
 

@@ -1,23 +1,20 @@
 import env from "@randajan/simple-app/env";
 import db from "../db/ramdb";
 
-
-const { queryKey, default:defaultRedirect } = env.redirect;
-
-export const matchRedirect = async (query)=>{
-  const redirectId = query?.[queryKey];
+export const matchRedirect = async (redirectId)=>{
   if (!redirectId) { return; }
   const tbl = await db("webRedirects");
   return tbl.rows(redirectId, false);
 }
 
-const fetchRedirectUrl = async (entry, redirect)=>{
-  const url = redirect ? redirect("url") : defaultRedirect;
-  return url || defaultRedirect || "";
+const fetchRedirectUrl = async (entry)=>{
+  const { redirect } = entry;
+  const url = redirect ? await redirect("url") : "";
+  return url || "";
 }
 
 
-export const formatRedirectUrl = async (entry, redirect)=>{
-  const url = await fetchRedirectUrl(entry, redirect);
-  return (url).trim();
+export const attachRedirectUrl = async (entry)=>{
+  const url = await fetchRedirectUrl(entry);
+  entry.redirectUrl = (url).trim();
 }

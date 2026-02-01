@@ -1,19 +1,30 @@
 import db from "../db/ramdb.js";
 import { addToQueue } from "./queues.js";
 
-export const logAndStore = async (entry, redirectUrl, redirect) => {
-    const { id, method, url, query, referrer } = entry;
-
+export const attachClient = async (e)=>{
+    const { record, redirect } = e;
+    const { fingerprint } = record;
     const clients = await db("webClients");
-    const isUnique = !await clients.rows.exist(id);
-    if (isUnique) { await clients.rows.add(entry); }
-    else {
-        const c = await clients.rows.get(id);
-        if (await c("isIgnored")) { return; }
+    //TODO ADD isBannedDef isIgnoredDef
+    e.client = await clients.rows.get(fingerprint, false);
+    e.isUnique = !e.client;
+    if (!e.isUnique) {
+        [ e.isBanned, e.isIgnored ] = await e.client.eval(["isBanned", "isIgnored"]);
+        return;
     }
 
+    [ e.isBanned, e.isIgnored ] = await e.redirect.eval(["isBannedDef", "isIgnoredDef"]);
+
+    const { isBanned, isIgnored } = e;
+    e.client = await clients.rows.add({...record, isBanned, isIgnored });
+}
+
+export const logAccess = async (e) => {
+    const { record, client, redirect, redirectUrl, isUnique } = e;
+    const { method, query, referrer } = record;
+
     const accs = await db("webAccesses");
-    const acc = await accs.rows.add({ client:id, redirect, redirectUrl, method, url, query, referrer, isUnique });
+    const acc = await accs.rows.add({ client, redirect, redirectUrl, method, query, referrer, isUnique });
 
     if (redirect) { addToQueue(redirect, acc); }
 

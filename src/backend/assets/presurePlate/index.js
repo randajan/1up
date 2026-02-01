@@ -1,37 +1,45 @@
 import env from "@randajan/simple-app/env";
-import { buildEntry } from "./parser.js";
-import { formatRedirectUrl, matchRedirect } from "./redirect.js";
-import { logAndStore } from "./logger.js";
+import { buildRecord } from "./parser.js";
+import { attachRedirectUrl, matchRedirect } from "./redirect.js";
+import { attachClient, logAccess } from "./logger.js";
 
 import toHtml from "@randajan/js-object-view";
 
 
-export const presurePlate = (skip = () => false) => async (ctx, next) => {
-  if (skip(ctx)) { return next(); }
+export const presurePlate = (getKey = ()=>{}) => async (ctx, next) => {
+  const rId = getKey(ctx);
+  if (!rId) { return next(); }
 
-  const entry = buildEntry(ctx);
+  const e = {};
 
-  const redirect = await matchRedirect(ctx.query);
-  const redirectUrl = await formatRedirectUrl(entry, redirect);
+  e.redirect = await matchRedirect(rId);
+  if (!e.redirect) { return next(); }
 
-  if (!redirectUrl) {
-    ctx.status = 404;
-    ctx.body = "Not Found";
-    return;
-  }
+  e.record = buildRecord(ctx);
+
+  if (!e.redirect) { ctx.status = 404; return; }
+
+  await attachRedirectUrl(e);
+  await attachClient(e);
+  
+  if (!e.redirectUrl) { e.status = 401; }
+  else if (e.isBanned) { e.status = 403; }
+  else { e.status = 307; }
+
+  const accProm = e.isIgnored ? null : logAccess(e);
 
   if (!env.redirect.debug) {
-    ctx.status = 307;
-    ctx.set("Location", redirectUrl);
-    logAndStore(entry, redirectUrl, redirect); //no await
+    ctx.status = e.status;
+    ctx.body = `<html><script>location.replace("${e.redirectUrl}")</script><body><a href="${e.redirectUrl}">Click here</a></body></html>`;
+    if (e.status === 307) { ctx.set("Location", url); }
   } else {
+    const acc = await accProm;
+    e.redirect = await e.redirect?.saved.vals;
+    e.client = await e.client?.saved.vals;
+    e.access = await acc?.saved.vals;
     ctx.status = 200;
-    const acc = await logAndStore(entry, redirectUrl, redirect); //no await
-    const dbg = await acc.saved.vals;
-    dbg.client = await dbg.client?.saved.vals;
-    dbg.redirect = await dbg.redirect?.saved.vals;
-    ctx.body = `<html><head></head><body>${await toHtml(dbg)}</body></html>`;
-
-
+    ctx.body = `<html><head></head><body>${await toHtml(e)}</body></html>`;
   }
+
+
 };

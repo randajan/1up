@@ -1,10 +1,10 @@
 {
-  "startedAt": "2026-01-31T22:47:35.337Z",
-  "nextIndex": 122,
+  "startedAt": "2026-02-01T08:37:27.883Z",
+  "nextIndex": 2871,
   "counts": {
-    "available": 0,
-    "taken": 122,
+    "available": 1145,
+    "taken": 1726,
     "errors": 0
   },
-  "lastDomain": "dn.cz"
+  "lastDomain": "ch0.cz"
 }

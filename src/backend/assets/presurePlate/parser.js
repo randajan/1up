@@ -21,7 +21,7 @@ const getClientIp = (ctx) => {
 
 const getUa = (ctx) => {
   const ua = norm(ctx.headers["user-agent"]);
-  const r = { ua };
+  const r = { userAgent:ua };
   const uaDetails = new UAParser(ua).getResult();
   if (!uaDetails) { return r; }
 
@@ -79,16 +79,15 @@ const buildFingerprint = (n) => {
   return crypto.createHash("sha256").update(raw).digest("hex");
 };
 
-const withFingerprint = (entry)=>{
-  entry.id = buildFingerprint(entry);
-  return entry;
+const withFingerprint = (rec)=>{
+  rec.fingerprint = buildFingerprint(rec);
+  return rec;
 }
 
-export const buildEntry = (ctx) => {
+export const buildRecord = (ctx) => {
   const { method, query, headers } = ctx;
 
   const ip = getClientIp(ctx);
-  const url = ctx.originalUrl || ctx.url;
   const referrer = headers["referer"] || headers["referrer"];
   const acceptLanguage = norm(headers["accept-language"]);
 
@@ -98,7 +97,6 @@ export const buildEntry = (ctx) => {
   return withFingerprint({
     ip,
     method,
-    url,
     query,
     referrer,
     acceptLanguage,

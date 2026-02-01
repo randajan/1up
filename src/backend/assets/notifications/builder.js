@@ -5,9 +5,9 @@ const { debugTo } = env.nodemailer;
 
 const buildClient = async (client)=>{
   return client.eval([
-    "createdAt", "alias", "ip",
+    "createdAt", "alias", "ip", "userAgent",
     "osName", "osVersion", "browserName", "browserVersion",
-    "userAgent", "deviceType", "deviceVendor", "deviceModel",
+    "deviceType", "deviceVendor", "deviceModel",
     "geoCity", "geoRegion", "geoCountry",
   ], {byKey:true});
 }
@@ -18,7 +18,7 @@ const buildAccesses = async (accs)=>{
   const accesses = await Promise.all(accs.map(async acc=>{
     const a = await acc.eval([
       "createdAt", "client", "isUnique",
-      "method", "url", "referrer", "redirectUrl"
+      "method", "query", "referrer", "redirectUrl"
     ], { byKey:true });
 
     if (a.isUnique) { newClients.push(await buildClient(a.client)); }
@@ -65,7 +65,7 @@ export const buildNotificationEmail = async (redirect, accs) => {
     "</body></html>",
   ].join("");
 
-  const subject = `Presure plate ${newClients.length}/${accesses.length}`;
+  const subject = `1up report ${newClients.length}/${accesses.length}`;
 
   return { to, subject, html };
 };
