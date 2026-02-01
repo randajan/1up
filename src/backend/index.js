@@ -8,14 +8,18 @@ import { koaBody } from "koa-body";
 import { presurePlate } from "./assets/presurePlate/index.js";
 
 import { odata } from "./assets/db/odata.js";
+import { odataAuth } from "./assets/auth/index.js";
+
 
 const router = new Router();
+
 
 router.get("/:key", presurePlate(ctx=>{
     const key = ctx.params.key;
     if (!isNaN(Number(key[0]))) { return key; }
 }));
 
+router.use("/api/odata", odataAuth);
 router.use("/api/odata", koaBody());
 router.all("/api/odata/appsheet/:s*", odata.serve(odataResponder, env.home+"/api/odata/appsheet", { tzWorkaround: true, useTimespan: true }));
 router.all("/api/odata/raws/:s*", odata.serve(odataResponder, env.home+"/api/odata/raws"));
@@ -24,4 +28,3 @@ router.all("/api/odata/vals/:s*", odata.serve(odataResponder, env.home+"/api/oda
 app.use(router.routes()).use(router.allowedMethods());
 
 be.start(env.port);
-

@@ -1,10 +1,10 @@
 {
   "startedAt": "2026-02-01T08:37:27.883Z",
-  "nextIndex": 2871,
+  "nextIndex": 3114,
   "counts": {
-    "available": 1145,
-    "taken": 1726,
+    "available": 1211,
+    "taken": 1903,
     "errors": 0
   },
-  "lastDomain": "ch0.cz"
+  "lastDomain": "cor.cz"
 }
