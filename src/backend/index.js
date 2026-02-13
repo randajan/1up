@@ -1,34 +1,36 @@
 import be, { app } from "@randajan/simple-app/be/koa";
 import env from "@randajan/simple-app/env";
-import odataResponder from "@randajan/odata-server/koa";
+import { importFiles } from "@randajan/simple-app/fs";
+import log from "@randajan/simple-app/log";
+
+import jet from "@randajan/jet-core";
 
 import Router from "koa-router";
-import { koaBody } from "koa-body";
-
-import { presurePlate } from "./assets/presurePlate/index.js";
-
-import { odata } from "./assets/db/odata.js";
-import { odataAuth } from "./assets/auth/index.js";
 
 
-const router = new Router();
+import "./init.js";
+// import "./bots/**";
+// import "./crone";
+// import "./migration.js";
+import * as routes from "./controllers/**/*.js";
 
-router.get("/admin", ctx=>{
-    ctx.status = 302;
-    ctx.set("Location", env.admin.url);
+
+const _routers = [];
+importFiles(routes, {
+    prefix: "./controllers",
+    suffix: ".js",
+    trait: ({ default: setupRouter }, prefix) => {
+
+        const router = new Router(prefix === "index" ? {} : { prefix });
+        try { setupRouter(router); } catch (err) { log.red(err); }
+        _routers.push(router);
+        app.use(router.routes()).use(router.allowedMethods())
+    }
 });
 
-router.get("/:key", presurePlate(ctx=>{
-    const key = ctx.params.key;
-    if (!isNaN(Number(key[0]))) { return key; }
-}));
-
-router.use("/api/odata", odataAuth);
-router.use("/api/odata", koaBody());
-router.all("/api/odata/appsheet/:s*", odata.serve(odataResponder, env.home+"/api/odata/appsheet", { tzWorkaround: true, useTimespan: true }));
-router.all("/api/odata/raws/:s*", odata.serve(odataResponder, env.home+"/api/odata/raws"));
-router.all("/api/odata/vals/:s*", odata.serve(odataResponder, env.home+"/api/odata/vals", { returnVals: true }));
-
-app.use(router.routes()).use(router.allowedMethods());
-
 be.start(env.port);
+
+process.on("uncaughtException", err => {
+    console.warn("Uncaught!!!");
+    console.error(err);
+});

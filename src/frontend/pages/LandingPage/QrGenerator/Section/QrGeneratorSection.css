@@ -1,0 +1,29 @@
+.QrGenerator__section {
+    border: 1px solid #d6dbe6;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 12px 24px rgba(16, 24, 40, 0.08);
+    overflow: hidden;
+    margin: 0;
+    display: grid;
+    gap: 0;
+}
+
+.QrGenerator__section + .QrGenerator__section {
+    margin-top: 1.1rem;
+}
+
+.QrGenerator__sectionTitle {
+    padding: 0.8rem 1rem 0.7rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #2e3440;
+    border-bottom: 1px solid #eceff5;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+}
+
+.QrGenerator__sectionBody {
+    padding: 0.25rem 0.75rem 1rem;
+    background: linear-gradient(180deg, #fbfcff 0%, #f6f8fd 100%);
+}

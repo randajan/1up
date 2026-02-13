@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Cormorant Garamond", Helvetica;
+    font-weight: 400;
+    font-style: normal;
+    font-optical-sizing: auto;
+    line-height: 1.25em;
+}
+
+html {
+    font-size: 1.2rem;
+}
+
+
+html,
+body,
+#root,
+.App {
+    height: 100%;
+    width: 100%;
+}
+
+body,
+input {
+    padding: 0;
+}

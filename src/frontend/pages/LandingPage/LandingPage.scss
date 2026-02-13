@@ -1,0 +1,11 @@
+.LandingPage {
+    padding: 1.5rem;
+    box-sizing: border-box;
+    min-height: 100%;
+}
+
+.LandingPage__lang {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+}

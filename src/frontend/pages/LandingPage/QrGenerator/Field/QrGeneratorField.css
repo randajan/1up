@@ -1,0 +1,37 @@
+.QrGenerator__slider {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) 2fr;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.QrGenerator__sliderLabel {
+    font-size: 0.85rem;
+    color: #4c566a;
+}
+
+.QrGenerator__helper {
+    display: inline-block;
+    font-size: 0.78rem;
+    line-height: 1.2;
+}
+
+.QrGenerator__helper--minor {
+    color: #7a8599;
+}
+
+.QrGenerator__helper--major {
+    color: #a86a00;
+    font-weight: 500;
+}
+
+.QrGenerator__helper--critical {
+    color: #d32f2f;
+    font-weight: 600;
+}
+
+@media (max-width: 980px) {
+    .QrGenerator__slider {
+        grid-template-columns: 1fr;
+    }
+}

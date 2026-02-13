@@ -1,0 +1,10 @@
+.FootPane {
+    display:flex;
+    justify-content: space-between;
+    padding:calc(.1em + .4vw);
+
+    .copyright {
+        font-size:.8em;
+        opacity:.5;
+    }
+}

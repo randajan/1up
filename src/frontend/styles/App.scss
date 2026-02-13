@@ -1,0 +1,43 @@
+.App {
+    position:relative;
+    display:grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 100%;
+    overflow:hidden;
+
+    --cLight:#EEE;
+    --cDark:#333;
+
+    & {
+        color:var(--cDark);
+    }
+
+    .slab {
+        width: 100vh;
+        min-width: 70vw;
+        max-width: 100%;
+        margin: auto;
+    }
+    
+    p{
+        font-weight: 200;
+    }
+
+    b{
+        font-weight: 700;
+    }
+
+
+    h1 {
+        font-size:1.8em;
+    }
+
+    h2 {
+        font-size:1.5em;
+    }
+    
+    h3 {
+        font-size:1.2em;
+    }
+
+}

@@ -1,0 +1,65 @@
+.QrGenerator__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.QrGenerator__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem 1rem;
+    align-items: start;
+}
+
+.QrGenerator__field--wide {
+    grid-column: 1 / -1;
+}
+
+.QrGenerator__field--boolean {
+    align-self: center;
+}
+
+.QrGenerator__groups {
+    display: grid;
+    gap: 1rem;
+}
+
+.QrGenerator__group {
+    --group-accent: #d8dde9;
+}
+
+.QrGenerator__group[data-group="main"] {
+    --group-accent: #5b8def;
+}
+
+.QrGenerator__group[data-group="config"] {
+    --group-accent: #5b8def;
+}
+
+.QrGenerator__group[data-group="bg"] {
+    --group-accent: #74b6d5;
+}
+
+.QrGenerator__group[data-group="bits"] {
+    --group-accent: #6d7bd8;
+}
+
+.QrGenerator__group[data-group="eyes"] {
+    --group-accent: #8e6ddb;
+}
+
+.QrGenerator__group[data-group="pupils"] {
+    --group-accent: #d66d8a;
+}
+
+.QrGenerator__group[data-group="mid"] {
+    --group-accent: #d98b5f;
+}
+
+.QrGenerator__group[data-group="lbl"] {
+    --group-accent: #67b38f;
+}
+
+.QrGenerator__group[data-group="other"] {
+    --group-accent: #8892a6;
+}

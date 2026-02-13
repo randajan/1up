@@ -1,0 +1,45 @@
+.QrGenerator__groupAccordion {
+    border: 1px solid #e7eaf2;
+    border-left: 4px solid var(--group-accent, #d8dde9);
+    border-radius: 12px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+    background: #ffffff !important;
+    overflow: hidden;
+}
+
+.QrGenerator__groupAccordion::before {
+    display: none;
+}
+
+.QrGenerator__groupSummary {
+    min-height: 40px !important;
+    padding: 0 0.65rem !important;
+}
+
+.QrGenerator__groupSummary .MuiAccordionSummary-content {
+    margin: 0.45rem 0 !important;
+}
+
+.QrGenerator__groupTitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--group-accent, #d8dde9);
+}
+
+.QrGenerator__groupIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #7e889b;
+    transition: transform 120ms ease;
+}
+
+.QrGenerator__groupSummary.Mui-expanded .QrGenerator__groupIcon {
+    transform: rotate(90deg);
+}
+
+.QrGenerator__groupDetails {
+    padding: 0 0.65rem 0.75rem !important;
+}
