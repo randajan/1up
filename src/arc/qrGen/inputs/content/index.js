@@ -1,5 +1,5 @@
 import { importFiles } from "@randajan/simple-app/fs";
-import { FieldRegistry } from "./../class/FieldRegistry.js";
+import { FieldRegistry } from "../../../reforms";
 import * as modules from "./modules/*.js";
 
 const buildModule = (mDef, id) => {

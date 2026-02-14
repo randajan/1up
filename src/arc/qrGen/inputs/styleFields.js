@@ -1,6 +1,6 @@
 import { camelcase } from "../tools";
 import { _cornersAttrs, _cornersSides, _cornersZones, _lblTransform } from "../consts";
-import { FieldRegistry } from "./class/FieldRegistry";
+import { FieldRegistry } from "../../reforms";
 import { buildSvgInjection } from "./svgInject";
 
 const isDiagonalRotation = (rotation) => {

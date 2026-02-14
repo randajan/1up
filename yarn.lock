@@ -618,10 +618,10 @@
   resolved "https://registry.yarnpkg.com/@randajan/jet-react/-/jet-react-2.9.0.tgz#a376477b54ffa68b7615238375d072d1184ea670"
   integrity sha512-449YU+I/RzGvfP7gHjHj5Z8kRIXjccmUu0ycWBvu9rwsQA4WcXmWaUVpQDBxWU5WdfbONxnwuD/aIu2NP6beCQ==
 
-"@randajan/js-object-view@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@randajan/js-object-view/-/js-object-view-3.1.0.tgz#b4a612aabe19a6991981fff0c35bb22d986d3d7c"
-  integrity sha512-04rPhi5ZOQ/fzkLLgd5GqjSJ4WEsmEKSiYi2LH7kpKWx5TzDnD0HhpgLkE/rpsazZ2TSlC5fwZwILm4hQYHOdQ==
+"@randajan/js-object-view@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@randajan/js-object-view/-/js-object-view-3.2.0.tgz#b6bcfd3624bc80cfb492146fe60d9893d3764bee"
+  integrity sha512-fSsn/YasWMqqv9gJi3HFhq4GEUtAnU8c1vFHDmRAe5mbu1AfxoO5olcmvLW0MtVvyqX4wx0Oe8Nkp6pc9x0BbQ==
 
 "@randajan/odata-server@^2.6.0":
   version "2.6.0"

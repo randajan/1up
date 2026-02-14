@@ -1,4 +1,4 @@
-import { toNum, toStr } from "../../tools.js";
+import { toNum, toStr } from "../../qrGen/tools.js";
 import { FieldType } from "./FieldType.js";
 
 const _defaultTypes = (() => {

@@ -1,5 +1,5 @@
 import { FieldType } from "./FieldType.js";
-import { isEmpty } from "../../tools.js";
+import { isEmpty } from "../../qrGen/tools.js";
 
 export class FieldDefinition {
     constructor(group, id, type, opt={}) {
@@ -60,7 +60,7 @@ export class FieldDefinition {
 
         if (value == null) {
             value = this.fb(computed);
-            pushIssue("fallback", "minor", value);
+            if (value != null) { pushIssue("fallback", "minor", value); }
         }
 
         computed[id] = value;

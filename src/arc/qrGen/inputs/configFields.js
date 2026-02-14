@@ -1,4 +1,4 @@
-import { FieldRegistry } from "./class/FieldRegistry";
+import { FieldRegistry } from "../../reforms";
 import { getModule, listModules } from "./content";
 
 const mergeIssues = (target = {}, source = {}) => {
