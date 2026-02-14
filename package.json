@@ -1,6 +1,6 @@
 {
   "name": "presure-plate",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "presure-plate",
   "repository": "git@github.com:randajan/fruhling.git",
   "main": "index.js",
