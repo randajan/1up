@@ -7,3 +7,9 @@ import serve from "koa-static";
 app.proxy = true;
 
 app.use(serve(info.dir.fe));
+
+
+process.on("uncaughtException", err => {
+    console.warn("Uncaught!!!");
+    console.error(err);
+});

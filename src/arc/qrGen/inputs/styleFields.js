@@ -53,7 +53,7 @@ export const styleFields = new FieldRegistry("style", {
 
             //main switch
             const sw = camelcase(prefixId, "corner");
-            out[sw] = { type: "corner", showIf: s => (s.mode !== "modeBasic" && (!swm || s[swm])), logic: true };
+            out[sw] = { type: "corner", showIf: s => (s.mode !== "modeBasic" && (!swm || s[swm])), isLogic: true };
 
             for (const s of _cornersSides) { //TL, TR, BL, BR
                 for (const z of _cornersZones) { //inner outer
@@ -63,15 +63,15 @@ export const styleFields = new FieldRegistry("style", {
 
                         const based = camelcase(prefixId, type);
                         const basedRadius = isRadius ? null : camelcase(prefixId, "corner", "radius");
-                        out[based] = { type, showIf: s => (s[sw] === "basic" && (!swm || s[swm]) && (!basedRadius || s[basedRadius] > 0)), logic: true };
+                        out[based] = { type, showIf: s => (s[sw] === "basic" && (!swm || s[swm]) && (!basedRadius || s[basedRadius] > 0)), isLogic: true };
 
                         const zoned = camelcase(prefixId, "corner", z, a);
                         const zonedRadius = isRadius ? null : camelcase(prefixId, "corner", z, "radius");
-                        out[zoned] = { type, showIf: s => (s[sw] === "zoned" && (!swm || s[swm]) && (!zonedRadius || s[zonedRadius] > 0)), logic: true };
+                        out[zoned] = { type, showIf: s => (s[sw] === "zoned" && (!swm || s[swm]) && (!zonedRadius || s[zonedRadius] > 0)), isLogic: true };
 
                         const sided = camelcase(prefixId, "corner", s, a);
                         const sidedRadius = isRadius ? null : camelcase(prefixId, "corner", s, "radius");
-                        out[sided] = { type, showIf: s => (s[sw] === "sided" && (!swm || s[swm]) && (!sidedRadius || s[sidedRadius] > 0)), logic: true };
+                        out[sided] = { type, showIf: s => (s[sw] === "sided" && (!swm || s[swm]) && (!sidedRadius || s[sidedRadius] > 0)), isLogic: true };
 
                         const all = camelcase(prefixId, "corner", z, s, a);
                         const allRadius = isRadius ? null : camelcase(prefixId, "corner", z, s, "radius");
@@ -95,7 +95,7 @@ export const styleFields = new FieldRegistry("style", {
         }
 
         sf.defineFields("main", {
-            "mode": { type: "enum", enm: ["modeBasic", "modeAdvanced", "modeExpert"], fb: "modeBasic", logic: true },
+            "mode": { type: "enum", enm: ["modeBasic", "modeAdvanced", "modeExpert"], fb: "modeBasic", isLogic: true },
             "id": { type: "text", fb: "myQr", showIf: ({ mode }) => (mode === "modeExpert") },
             "symmetry": { type: "enum", enm: ["uniform", "central"], fb: "uniform", showIf: ({ mode }) => (mode !== "modeBasic") },
             "size": { type: "number", min: 128, max: 8196, step: 1, fb: 1024 },

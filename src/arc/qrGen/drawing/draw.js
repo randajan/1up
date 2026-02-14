@@ -17,6 +17,8 @@ export const drawQRCanvas = _qr => {
         midMaskType, midMaskSize,
     } = style;
 
+    
+
     const margin = Math.ceil(schema.size * padding);
     const viewSize = schema.size + margin * 2;
     const realSize = outputSize ?? style.size ?? viewSize;
@@ -26,7 +28,7 @@ export const drawQRCanvas = _qr => {
 
     const svg = new SVGCanvas({
         id, css, defs, scale,
-        width: realSize, height: realSize,
+        width: realSize/scale, height: realSize/scale,
         viewWidth: viewSize, viewHeight: viewSize,
     });
 

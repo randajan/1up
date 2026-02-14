@@ -3,22 +3,13 @@ export const createFieldCollector = () => ({
     computed: undefined
 });
 
-export const pushCollectedToGroups = (collector, collected, options = {}) => {
-    const {
-        skipHidden = true,
-        skipLogic = false,
-        groupResolver,
-        mapItem
-    } = options;
+export const pushCollectedToGroups = (collector, collected, mapItem) => {
 
     const { field, isShown, value, rawValue, issues, computed } = collected;
     if (computed != null) { collector.computed = computed; }
-    if (skipHidden && !isShown) { return; }
-    if (skipLogic && field.logic) { return; }
+    if (!isShown || field.isBackground) { return; }
 
-    const group = groupResolver ? groupResolver(collected) : (field.group || "other");
-    if (!group) { return; }
-
+    const group = field.group || "other";
     if (!collector.groups.has(group)) { collector.groups.set(group, []); }
 
     const baseItem = { field, value, rawValue, issues, computed };

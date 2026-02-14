@@ -20,12 +20,12 @@ export const QrGeneratorStyles = ({ say, qrGen, current, onChange }) => {
             {
                 collector,
                 collect: (c, collected) => {
-                    pushCollectedToGroups(c, collected, {
-                        mapItem: (item) => ({
+                    pushCollectedToGroups(c, collected, 
+                        item => ({
                             ...item,
                             useDefault: true
                         })
-                    });
+                    );
                 }
             }
         );

@@ -20,7 +20,7 @@ importFiles(routes, {
     prefix: "./controllers",
     suffix: ".js",
     trait: ({ default: setupRouter }, prefix) => {
-
+        if (prefix.endsWith("index")) { prefix = prefix.slice(0, -6); }
         const router = new Router(prefix === "index" ? {} : { prefix });
         try { setupRouter(router); } catch (err) { log.red(err); }
         _routers.push(router);
@@ -30,7 +30,4 @@ importFiles(routes, {
 
 be.start(env.port);
 
-process.on("uncaughtException", err => {
-    console.warn("Uncaught!!!");
-    console.error(err);
-});
+

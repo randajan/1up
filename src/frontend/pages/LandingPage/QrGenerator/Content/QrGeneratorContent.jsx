@@ -4,72 +4,55 @@ import "./QrGeneratorContent.css";
 
 import { createQueue } from "@randajan/queue";
 
-import { configFields, getModule, listModules } from "../../../../../arc/qrGen";
+import { configFields, getModule } from "../../../../../arc/qrGen";
 import { QrGeneratorFieldGroups } from "../Field/QrGeneratorFieldGroups";
 import { QrGeneratorSection } from "../Section/QrGeneratorSection";
 import { createFieldCollector, pushCollectedToGroups } from "../shared/collectFields";
 
-const resolveContentType = (value) => {
-    return getModule(value)?.id ?? "raw";
-};
+const resolveContentType = (value) => getModule(value)?.id ?? "raw";
 
 export const QrGeneratorContent = ({ say, qrGen, current, onChange }) => {
-    const modules = useMemo(() => listModules(), []);
-    const [rawConfig, rawByType, format, getActiveType] = useMemo(() => {
+    const [rawState, format] = useMemo(() => {
         const baseConfig = current?.config ?? current;
         const cfg = (baseConfig && typeof baseConfig === "object")
             ? baseConfig
             : (configFields.format({}).result || {});
-        const initialType = resolveContentType(cfg.contentType, modules);
-        const rawConfig = { ecc: cfg.ecc, contentType: initialType };
-        const contentMap = (cfg && typeof cfg.content === "object" && !Array.isArray(cfg.content)) ? cfg.content : {};
-        const rawByType = { ...contentMap };
-
-        if (!rawByType[initialType] || typeof rawByType[initialType] !== "object") {
-            rawByType[initialType] = {};
+        const initialType = resolveContentType(cfg.contentType);
+        const rawState = { ...cfg, contentType: initialType };
+        const contentMap = (cfg && typeof cfg.content === "object" && !Array.isArray(cfg.content)) ? cfg.content : null;
+        const activeContent = contentMap?.[initialType];
+        if (activeContent && typeof activeContent === "object") {
+            Object.assign(rawState, activeContent);
         }
-
-        let activeType = initialType;
-        const getActiveType = () => activeType;
+        delete rawState.content;
 
         const format = () => {
             const collector = createFieldCollector();
             const configOut = configFields.format(
-                rawConfig,
+                rawState,
                 {
-                    content: rawByType,
                     collector,
                     collect: (c, collected) => {
-                        pushCollectedToGroups(c, collected, {
-                            mapItem: (item) => ({
+                        pushCollectedToGroups(c, collected,
+                            (item) => ({
                                 ...item,
                                 useDefault: true,
                                 section: collected.section || "main"
                             })
-                        });
+                        );
                     }
                 }
             );
 
-            const nextType = resolveContentType(configOut?.result?.contentType, modules);
-            if (!rawByType[nextType] || typeof rawByType[nextType] !== "object") {
-                rawByType[nextType] = {};
-            }
-            activeType = nextType;
-
             return {
                 collector,
                 config: configOut,
-                content: {
-                    result: configOut?.result?.content,
-                    issues: configOut?.issues
-                },
-                contentType: nextType
+                contentType: resolveContentType(configOut?.result?.contentType)
             };
         };
 
-        return [rawConfig, rawByType, format, getActiveType];
-    }, [current, modules]);
+        return [rawState, format];
+    }, [current]);
 
     const [formatted, setFormatted] = useState(() => format());
 
@@ -82,36 +65,18 @@ export const QrGeneratorContent = ({ say, qrGen, current, onChange }) => {
                 if (!out?.config?.issues?.critical?.length) {
                     qrGen.setConfig(out.config?.result);
                 }
-                onChange?.("config", {
-                    ...rawConfig,
-                    content: rawByType
-                });
+                onChange?.("config", rawState);
             },
             { softMs: 10, hardMs: 50, pass: "last" }
         );
 
-        const handleFieldChange = (id, value, item) => {
-            if (item?.section === "main") {
-                if (value === undefined) { delete rawConfig[id]; }
-                else { rawConfig[id] = value; }
-
-                if (id === "contentType") {
-                    const nextType = resolveContentType(value, modules);
-                    if (!rawByType[nextType] || typeof rawByType[nextType] !== "object") {
-                        rawByType[nextType] = {};
-                    }
-                }
-            } else {
-                const activeType = getActiveType();
-                const current = rawByType[activeType] || {};
-                if (value === undefined) { delete current[id]; }
-                else { current[id] = value; }
-                rawByType[activeType] = current;
-            }
+        const handleFieldChange = (id, value) => {
+            if (value === undefined) { delete rawState[id]; }
+            else { rawState[id] = value; }
             enqueueFormat();
         };
         return [handleFieldChange, enqueueFormat];
-    }, [format, getActiveType, modules, qrGen]);
+    }, [format, qrGen, rawState]);
 
     useEffect(() => { enqueueFormat(); }, [enqueueFormat]);
 

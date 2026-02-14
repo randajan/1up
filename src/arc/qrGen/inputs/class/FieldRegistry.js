@@ -45,17 +45,17 @@ export class FieldRegistry {
         return Array.from(this.fields.values());
     }
 
-    normalize(values) {
-        const v = this._normalize(values);
+    normalize(input) {
+        const v = this._normalize(input);
         if (v && typeof v == "object" && !Array.isArray(v)) { return v; }
-        throw new Error(`ContentModule '${this.id}' expects object values`);
+        throw new Error(`ContentModule '${this.id}' expects object input`);
     }
 
-    format(values = {}, opt={}) {
+    format(input = {}, opt={}) {
         const { collector, collect } = opt;
-        const out = { computed:{}, issues:{}, collector };
+        const out = { computed:{}, issues:{}, input, collector };
 
-        const normalized = this.normalize(values);
+        const normalized = this.normalize(input);
         for (const field of this.fields.values()) {
             const r = field.collect(normalized[field.id], out);
             if (collect) { collect(collector, r); }

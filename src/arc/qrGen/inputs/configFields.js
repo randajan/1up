@@ -11,12 +11,11 @@ const mergeIssues = (target = {}, source = {}) => {
 };
 
 export const configFields = new FieldRegistry("config", {
-    format:({ computed, issues }, opt = {})=>{
-        const { content = {}, collector, collect } = opt;
+    format:({ input, computed, issues }, opt = {})=>{
+        const { collector, collect } = opt;
 
-        const contentType = computed.contentType || "raw";
-        const module = getModule(contentType);
-        const contentFormatted = module.format(content[contentType] || content, {
+        const module = getModule(computed.contentType);
+        const contentFormatted = module.format(input, {
             ...opt,
             collector,
             collect: collect
@@ -33,5 +32,7 @@ export const configFields = new FieldRegistry("config", {
 
 configFields.defineFields("config", {
     ecc: { type: "enum", enm: ["L", "M", "Q", "H"], fb: "M", req:true },
+    size: { type: "number", type: "number", min: 128, max: 8196, fb:1024, step: 1, isBackground:true },
+    label: { type: "text", isBackground:true },
     contentType: { type: "enum", enm: listModules().map(module => module.id), fb:"raw" }
 });

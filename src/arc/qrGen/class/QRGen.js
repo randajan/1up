@@ -25,23 +25,25 @@ const calculateSchema = (contentBody, ecc="M") => {
 }
 
 export class QrGen {
-    constructor({ canvas, content, ecc, label, size, style, onChange } = {}) {
-        const _p = { self: this, canvas, content, ecc, label, size, style };
+    static create(opt) { return new QrGen(opt); }
+
+    constructor({ canvas, onChange } = {}) {
+        const _p = { self: this, canvas };
 
         _p.onChange = typeof onChange === "function" ? onChange : (() => { });
 
         this.setConfig = this.setConfig.bind(_p);
         this.setStyle = this.setStyle.bind(_p);
-        this.setLabel = this.setLabel.bind(_p);
         this.render = this.render.bind(_p);
     }
 
     setConfig(config = {}) {
         const { self, onChange } = this;
-        const { content, ecc } = config;
-        console.log(config);
+        const { content, ecc, label, size } = config;
         this.content = content;
         this.ecc = ecc;
+        this.label = label;
+        this.size = size;
         delete this.schema;
         onChange(self);
         return self;
@@ -50,13 +52,6 @@ export class QrGen {
     setStyle(style = {}) {
         const { self, onChange } = this;
         this.style = style;
-        onChange(self);
-        return self;
-    }
-
-    setLabel(label) {
-        const { self, onChange } = this;
-        this.label = label;
         onChange(self);
         return self;
     }
