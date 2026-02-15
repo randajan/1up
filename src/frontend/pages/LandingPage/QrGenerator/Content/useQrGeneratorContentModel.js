@@ -1,0 +1,87 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createQueue } from "@randajan/queue";
+
+import { configFields, getModule } from "../../../../../arc/qrGen";
+import { createFieldCollector, pushCollectedToGroups } from "../shared/collectFields";
+
+const resolveContentType = (value) => getModule(value)?.id ?? "raw";
+
+const createEmptyFormatted = () => ({
+    collector: createFieldCollector(),
+    config: undefined,
+    contentType: "raw"
+});
+
+const createInitialRawState = (current) => {
+    const baseConfig = current?.config ?? current;
+    const cfg = (baseConfig && typeof baseConfig === "object") ? baseConfig : { contentType: "raw" };
+    const initialType = resolveContentType(cfg.contentType);
+    const rawState = { ...cfg, contentType: initialType };
+    const contentMap = (cfg && typeof cfg.content === "object" && !Array.isArray(cfg.content)) ? cfg.content : null;
+    const activeContent = contentMap?.[initialType];
+
+    if (activeContent && typeof activeContent === "object") {
+        Object.assign(rawState, activeContent);
+    }
+    delete rawState.content;
+    return rawState;
+};
+
+const formatContentState = (rawState) => {
+    const collector = createFieldCollector();
+    const config = configFields.format(rawState, {
+        collector,
+        collect: (c, collected) => {
+            pushCollectedToGroups(c, collected, (item) => ({
+                ...item,
+                useDefault: true,
+                section: collected.section || "main"
+            }));
+        }
+    });
+
+    return { collector, config, contentType: resolveContentType(config?.result?.contentType) };
+};
+
+const scheduleInitialFormat = (run) => {
+    if (typeof window !== "undefined" && typeof window.requestIdleCallback === "function") {
+        const id = window.requestIdleCallback(run, { timeout: 120 });
+        return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(run, 16);
+    return () => clearTimeout(id);
+};
+
+export const useQrGeneratorContentModel = ({ current, qrGen, onChange }) => {
+    const rawStateRef = useRef(createInitialRawState(current));
+    const [formatted, setFormatted] = useState(() => createEmptyFormatted());
+
+    const formatAndApply = useCallback(() => {
+        const out = formatContentState(rawStateRef.current);
+        setFormatted(out);
+        if (!out?.config?.issues?.critical?.length) {
+            qrGen?.setConfig(out.config?.result);
+        }
+        onChange?.("config", rawStateRef.current);
+    }, [onChange, qrGen]);
+
+    const enqueueFormat = useMemo(() => createQueue(formatAndApply, {
+        softMs: 10,
+        hardMs: 50,
+        pass: "last"
+    }), [formatAndApply]);
+
+    const handleFieldChange = useCallback((id, value) => {
+        const rawState = rawStateRef.current;
+        if (value === undefined) { delete rawState[id]; }
+        else { rawState[id] = value; }
+        enqueueFormat();
+    }, [enqueueFormat]);
+
+    useEffect(() => {
+        rawStateRef.current = createInitialRawState(current);
+        return scheduleInitialFormat(enqueueFormat);
+    }, [current, enqueueFormat]);
+
+    return { formatted, handleFieldChange };
+};

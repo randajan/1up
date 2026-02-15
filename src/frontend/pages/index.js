@@ -3,6 +3,7 @@ import { info } from "@randajan/simple-app/fe";
 import jet from "@randajan/jet-core";
 
 import { LandingPage } from "./LandingPage/LandingPage";
+import { QrEditPage } from "./QrEditPage/QrEditPage";
 import { createRouter } from "@randajan/jet-react/dom/router";
 
 import page from "@randajan/jet-react/base/page";
@@ -10,6 +11,8 @@ import tab from "@randajan/jet-react/base/tab";
 
 const pages = [
   { title:"", path:"/", content:<LandingPage/>, titleMenu:"" },
+  { title:"", path:"/qr/edit", content:<QrEditPage/>, titleMenu:"" },
+  { title:"", path:"/wtf", content:<div/>},
   { title:"", path:"/*any", content:<LandingPage/> },
 ];
 
@@ -36,4 +39,4 @@ tab.fit((next, v)=>{
   return v;
 });
 
-page.watch(_=>tab.set("title"));
+//page.watch(_=>tab.set("title"));

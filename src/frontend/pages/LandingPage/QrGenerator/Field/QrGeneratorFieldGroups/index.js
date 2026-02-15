@@ -1,0 +1,1 @@
+export { QrGeneratorFieldGroups } from "./QrGeneratorFieldGroups";

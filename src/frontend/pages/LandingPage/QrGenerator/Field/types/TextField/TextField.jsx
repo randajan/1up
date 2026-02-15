@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextField } from "@mui/material";
 
-export const NumberField = ({ label, value, onChange, inputProps, error, helperText }) => {
-    const external = value == null ? "" : String(value);
+import "./TextField.scss";
+
+export const TextFieldControl = ({ label, value, onChange, type, placeholder, inputProps, multiline, error, helperText }) => {
+    const external = value ?? "";
     const [draft, setDraft] = useState(external);
     const isFocusedRef = useRef(false);
 
@@ -16,16 +18,17 @@ export const NumberField = ({ label, value, onChange, inputProps, error, helperT
             value={draft}
             onFocus={() => { isFocusedRef.current = true; }}
             onBlur={() => { isFocusedRef.current = false; }}
-            onChange={ev => {
+            onChange={(ev) => {
                 const next = ev.target.value;
                 setDraft(next);
                 onChange(next);
             }}
             size="small"
             fullWidth
-            type="number"
+            type={type}
+            placeholder={placeholder}
             inputProps={inputProps}
-            InputLabelProps={{ shrink: true }}
+            multiline={multiline}
             error={!!error}
             helperText={helperText}
         />

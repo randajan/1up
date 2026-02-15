@@ -2,6 +2,8 @@ import React from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { format as formatDate, isValid as isValidDate, parseISO } from "date-fns";
 
+import "./DateField.scss";
+
 export const DateField = ({ label, value, onChange, error, helperText, placeholder, inputProps }) => {
     const parsed = typeof value === "string" ? parseISO(value) : value instanceof Date ? value : null;
     const pickerValue = parsed && isValidDate(parsed) ? parsed : null;

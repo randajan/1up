@@ -1,18 +1,20 @@
 import React from "react";
 import { MenuItem, TextField } from "@mui/material";
 
+import "./EnumField.scss";
+
 export const EnumField = ({ label, value, onChange, options, field, say, error, helperText }) => (
     <TextField
         select
         label={label}
         value={value ?? ""}
-        onChange={ev => onChange(ev.target.value)}
+        onChange={(ev) => onChange(ev.target.value)}
         size="small"
         fullWidth
         error={!!error}
         helperText={helperText}
     >
-        {options.map(opt => {
+        {options.map((opt) => {
             const vk = String(opt);
             const optionLabel = say.sayOr(`field.${field.id}.enum.${vk}`, "") || say?.sayOr(`enum.${vk}`, vk);
             return (

@@ -105,17 +105,6 @@ export const styleFields = new FieldRegistry("style", {
             "css": { type: "textarea", showIf: ({ mode }) => (mode === "modeExpert") },
         });
 
-        sf.defineFields("bg", {
-            "bgOn": { type: "boolean" },
-            "bgClass": { type: "text", fb: "bg", showIf: ({ bgOn, mode }) => (bgOn && mode === "modeExpert") },
-            "bgFill": { type: "white", showIf: ({ bgOn }) => (bgOn) },
-            "bgStrokeWidth": { type: "strokeWidth", showIf: ({ bgOn }) => (bgOn) },
-            "bgStroke": { type: "black", showIf: ({ bgStrokeWidth, bgOn }) => (bgOn && bgStrokeWidth > 0) },
-            "bgOpacity": { type: "opacity", showIf: ({ bgOn, mode }) => (bgOn && mode !== "modeBasic") },
-            "bgFilter": { type: "textarea", showIf: ({ bgOn, mode }) => (bgOn && mode === "modeExpert") },
-            "bgCss": { type: "textarea", showIf: ({ bgOn, mode }) => (bgOn && mode === "modeExpert") }
-        });
-
         sf.defineFields("bits", {
             "bitsClass": { type: "text", fb: "bits", showIf: ({ mode }) => (mode === "modeExpert") },
             "bitsForm": { type: "form" },
@@ -126,6 +115,17 @@ export const styleFields = new FieldRegistry("style", {
             "bitsFilter": { type: "textarea", showIf: ({ mode }) => (mode === "modeExpert") },
             "bitsCss": { type: "textarea", showIf: ({ mode }) => (mode === "modeExpert") },
             ...defineCorners("bits")
+        });
+
+        sf.defineFields("bg", {
+            "bgOn": { type: "boolean" },
+            "bgClass": { type: "text", fb: "bg", showIf: ({ bgOn, mode }) => (bgOn && mode === "modeExpert") },
+            "bgFill": { type: "white", showIf: ({ bgOn }) => (bgOn) },
+            "bgStrokeWidth": { type: "strokeWidth", showIf: ({ bgOn }) => (bgOn) },
+            "bgStroke": { type: "black", showIf: ({ bgStrokeWidth, bgOn }) => (bgOn && bgStrokeWidth > 0) },
+            "bgOpacity": { type: "opacity", showIf: ({ bgOn, mode }) => (bgOn && mode !== "modeBasic") },
+            "bgFilter": { type: "textarea", showIf: ({ bgOn, mode }) => (bgOn && mode === "modeExpert") },
+            "bgCss": { type: "textarea", showIf: ({ bgOn, mode }) => (bgOn && mode === "modeExpert") }
         });
 
         sf.defineFields("mid", {

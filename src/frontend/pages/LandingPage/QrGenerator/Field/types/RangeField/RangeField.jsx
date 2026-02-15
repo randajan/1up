@@ -1,6 +1,8 @@
 import React from "react";
 import { Slider } from "@mui/material";
 
+import "./RangeField.scss";
+
 export const RangeField = ({ label, value, onChange, min, max, step }) => {
     const sliderMin = min ?? 0;
     const sliderMax = max ?? 100;

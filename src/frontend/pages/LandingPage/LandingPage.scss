@@ -1,11 +1,201 @@
-.LandingPage {
-    padding: 1.5rem;
-    box-sizing: border-box;
-    min-height: 100%;
-}
+﻿.LandingPage {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 1rem clamp(1rem, 2.8vw, 2.4rem) 2.4rem;
+    color: #1e2547;
 
-.LandingPage__lang {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0.75rem;
+    h1,
+    h2,
+    p,
+    a,
+    span {
+        font-family: "Baloo 2", "Nunito", "Segoe UI", sans-serif;
+        line-height: 1.2;
+    }
+
+    &__hero {
+        text-align: center;
+        margin: clamp(1.2rem, 2.8vw, 2.6rem) auto 1.8rem;
+        max-width: 920px;
+        display: grid;
+        gap: 0.85rem;
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: 0.01em;
+        }
+
+        p {
+            margin: 0;
+            color: #374165;
+            font-size: clamp(1.05rem, 2vw, 1.75rem);
+        }
+    }
+
+    &__pills {
+        display: flex;
+        justify-content: center;
+        gap: 0.65rem;
+        flex-wrap: wrap;
+    }
+
+    &__pill {
+        border: 2px solid #4d57a5;
+        border-radius: 10px;
+        padding: 0.25rem 0.8rem 0.3rem;
+        font-weight: 700;
+        font-size: 0.92rem;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(218, 227, 255, 0.88) 100%);
+        box-shadow: 0 2px 0 rgba(63, 78, 162, 0.6);
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.2rem;
+        align-items: stretch;
+    }
+
+    &__card {
+        border-radius: 18px;
+        padding: 1.1rem 1.2rem 1.2rem;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow:
+            inset 0 0 0 2px rgba(255, 255, 255, 0.9),
+            inset 0 0 0 4px rgba(146, 151, 206, 0.35),
+            0 12px 28px rgba(79, 54, 121, 0.2);
+
+        &--qr {
+            border: 2px solid rgba(31, 180, 228, 0.6);
+        }
+
+        &--short {
+            border: 2px solid rgba(218, 88, 202, 0.62);
+        }
+
+        h2 {
+            margin: 0 0 0.8rem;
+            font-size: clamp(1.7rem, 2.7vw, 2.25rem);
+            font-weight: 800;
+        }
+    }
+
+    &__cardBody {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    &__qrMock {
+        padding: 0.75rem;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(204, 233, 255, 0.88) 100%);
+        box-shadow: 0 8px 16px rgba(56, 99, 152, 0.2);
+    }
+
+    &__qrCanvas {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 10px;
+        border: 2px solid rgba(40, 57, 107, 0.7);
+        background:
+            repeating-linear-gradient(90deg, #0d173e 0 8px, transparent 8px 16px),
+            repeating-linear-gradient(#0d173e 0 8px, transparent 8px 16px),
+            #fff;
+    }
+
+    &__cardContent {
+        p {
+            margin: 0 0 0.6rem;
+            color: #313b61;
+            font-size: 1.05rem;
+        }
+    }
+
+    &__swatches {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.85rem;
+    }
+
+    &__swatch {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 2px solid rgba(11, 24, 70, 0.5);
+
+        &.is-dark { background: #0e1a41; }
+        &.is-green { background: #77d97d; }
+        &.is-cyan { background: #7ed8f0; }
+        &.is-blue { background: #7abdf4; }
+    }
+
+    &__inputs {
+        display: grid;
+        gap: 0.65rem;
+    }
+
+    &__input {
+        border: 2px solid rgba(171, 159, 215, 0.7);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #353f67;
+        padding: 0.55rem 0.85rem;
+        font-size: 1.04rem;
+    }
+
+    &__cardFooter {
+        margin-top: 0.95rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+
+        p {
+            margin: 0;
+            color: #2f3a62;
+        }
+    }
+
+    &__btn {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 800;
+        border-radius: 10px;
+        border: 2px solid rgba(36, 46, 104, 0.56);
+        padding: 0.4rem 1.1rem 0.45rem;
+        box-shadow: 0 4px 0 rgba(48, 52, 103, 0.55), 0 8px 18px rgba(41, 53, 120, 0.22);
+
+        &--cyan {
+            background: linear-gradient(180deg, #9cefff 0%, #44d5ef 54%, #2bb5dc 100%);
+        }
+
+        &--pink {
+            background: linear-gradient(180deg, #ff9ce2 0%, #ef52cc 52%, #ce3abb 100%);
+        }
+    }
+
+    @media (max-width: 980px) {
+        padding-top: 0.4rem;
+
+        &__grid {
+            grid-template-columns: 1fr;
+        }
+
+        &__cardBody {
+            grid-template-columns: 1fr;
+        }
+
+        &__qrMock {
+            max-width: 220px;
+        }
+
+        &__cardFooter {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
 }

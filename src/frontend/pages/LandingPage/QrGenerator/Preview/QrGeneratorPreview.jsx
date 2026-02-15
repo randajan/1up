@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Button } from "@mui/material";
 
-import "./QrGeneratorPreview.css";
+import "./QrGeneratorPreview.scss";
 
 const resolveSvgSource = (previewRef, qrGen) => {
     let source = qrGen?.render();

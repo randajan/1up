@@ -1,7 +1,167 @@
-.Background {
-    position:absolute; 
-    top:0; bottom:0; left:0; right:0;
-    height:100vh; width:100vw;
-    z-index:-1;
-    //background: url("./bg.png") top/cover no-repeat fixed;
+﻿.Background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background:
+        radial-gradient(1200px 520px at 78% 54%, rgba(244, 168, 231, 0.36) 0%, rgba(244, 168, 231, 0) 66%),
+        radial-gradient(1060px 520px at 24% 72%, rgba(109, 219, 255, 0.44) 0%, rgba(109, 219, 255, 0) 64%),
+        radial-gradient(920px 380px at 84% 80%, rgba(137, 166, 255, 0.28) 0%, rgba(137, 166, 255, 0) 70%),
+        linear-gradient(180deg, #fcf9ff 0%, #fefcff 36%, #f8f6ff 100%);
 }
+
+.Background__nebula,
+.Background__noise,
+.Background__scanlines,
+.Background__birds,
+.Background__stars {
+    position: absolute;
+    inset: 0;
+}
+
+.Background__nebula {
+    background:
+        radial-gradient(620px 260px at 12% 10%, rgba(146, 208, 255, 0.24) 0%, rgba(146, 208, 255, 0) 72%),
+        radial-gradient(520px 260px at 95% 18%, rgba(226, 173, 255, 0.24) 0%, rgba(226, 173, 255, 0) 66%),
+        radial-gradient(760px 340px at 56% 62%, rgba(245, 171, 223, 0.22) 0%, rgba(245, 171, 223, 0) 72%);
+}
+
+.Background__noise {
+    opacity: 0.22;
+    background:
+        radial-gradient(circle at 10% 14%, rgba(66, 88, 167, 0.2) 0 1px, transparent 2px),
+        radial-gradient(circle at 84% 72%, rgba(255, 172, 237, 0.25) 0 1px, transparent 2px),
+        radial-gradient(circle at 32% 78%, rgba(120, 204, 255, 0.2) 0 1px, transparent 2px);
+    background-size: 6px 6px, 9px 9px, 12px 12px;
+    mix-blend-mode: screen;
+}
+
+.Background__scanlines {
+    opacity: 0.14;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(60, 34, 104, 0.12) 0 1px,
+        rgba(255, 255, 255, 0.02) 1px 3px
+    );
+}
+
+.Background__birds {
+    overflow: hidden;
+}
+
+.Background__bird {
+    position: absolute;
+    top: var(--bird-top);
+    left: 0;
+    opacity: var(--bird-opacity, 0.55);
+    animation: bird-fly var(--bird-duration, 28s) linear infinite;
+    animation-delay: var(--bird-delay, 0s);
+}
+
+.Background__bird.is-reverse {
+    animation-name: bird-fly-reverse;
+}
+
+.Background__birdSprite {
+    position: relative;
+    display: block;
+    width: 16px;
+    height: 8px;
+    transform: scale(var(--bird-scale, 1));
+    transform-origin: top left;
+    image-rendering: pixelated;
+    background: url("./bird_up.png") center / 100% 100% no-repeat;
+    animation: bird-flap-up var(--bird-flap-duration, 0.6s) steps(1, end) infinite;
+    animation-delay: var(--bird-flap-delay, 0s);
+}
+
+.Background__birdSprite.is-up {
+    background-image: url("./bird_up.png");
+}
+
+.Background__birdSprite.is-down {
+    animation-name: bird-flap-down;
+    background-image: url("./bird_down.png");
+}
+
+@keyframes bird-flap-up {
+    0%, 100% {
+        background-image: url("./bird_up.png");
+    }
+    50% {
+        background-image: url("./bird_down.png");
+    }
+}
+
+@keyframes bird-flap-down {
+    0%, 100% {
+        background-image: url("./bird_down.png");
+    }
+    50% {
+        background-image: url("./bird_up.png");
+    }
+}
+
+@keyframes bird-fly {
+    0% { transform: translateX(-12vw) translateY(0); opacity: 0; }
+    8% { transform: translateX(-8vw) translateY(0); opacity: 0; }
+    14% { transform: translateX(6vw) translateY(calc(var(--bird-wobble, 6px) * -1)); opacity: var(--bird-opacity, 0.42); }
+    34% { transform: translateX(34vw) translateY(var(--bird-wobble, 6px)); opacity: var(--bird-opacity, 0.42); }
+    54% { transform: translateX(64vw) translateY(calc(var(--bird-wobble, 6px) * -1)); opacity: var(--bird-opacity, 0.42); }
+    68% { transform: translateX(88vw) translateY(0); opacity: 0; }
+    100% { transform: translateX(112vw) translateY(0); opacity: 0; }
+}
+
+@keyframes bird-fly-reverse {
+    0% { transform: translateX(112vw) translateY(0) scaleX(-1); opacity: 0; }
+    8% { transform: translateX(106vw) translateY(0) scaleX(-1); opacity: 0; }
+    14% { transform: translateX(86vw) translateY(calc(var(--bird-wobble, 6px) * -1)) scaleX(-1); opacity: var(--bird-opacity, 0.42); }
+    34% { transform: translateX(56vw) translateY(var(--bird-wobble, 6px)) scaleX(-1); opacity: var(--bird-opacity, 0.42); }
+    54% { transform: translateX(28vw) translateY(calc(var(--bird-wobble, 6px) * -1)) scaleX(-1); opacity: var(--bird-opacity, 0.42); }
+    68% { transform: translateX(2vw) translateY(0) scaleX(-1); opacity: 0; }
+    100% { transform: translateX(-12vw) translateY(0) scaleX(-1); opacity: 0; }
+}
+
+.Background__star {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    opacity: 0.75;
+}
+
+.Background__star::before,
+.Background__star::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.95);
+    filter: drop-shadow(0 0 10px rgba(121, 227, 255, 0.65));
+}
+
+.Background__star::before {
+    width: 2px;
+    height: 16px;
+}
+
+.Background__star::after {
+    width: 16px;
+    height: 2px;
+}
+
+.Background__star--1 { left: 9%; top: 8%; }
+.Background__star--2 { left: 88%; top: 16%; }
+.Background__star--3 { left: 73%; top: 32%; }
+.Background__star--4 { left: 93%; top: 50%; }
+.Background__star--5 { left: 80%; top: 63%; }
+.Background__star--6 { left: 7%; top: 74%; }
+.Background__star--7 { left: 24%; top: 64%; }
+.Background__star--8 { left: 59%; top: 66%; }
+.Background__star--9 { left: 86%; top: 83%; }
+.Background__star--10 { left: 14%; top: 86%; }
+.Background__star--11 { left: 38%; top: 44%; }
+.Background__star--12 { left: 66%; top: 79%; }
+.Background__star--13 { left: 52%; top: 22%; }
+.Background__star--14 { left: 95%; top: 72%; }
+

@@ -1,6 +1,8 @@
 import React from "react";
 import { TextField } from "@mui/material";
 
+import "./FileField.scss";
+
 export const FileField = ({ label, onChange, accept, error, helperText }) => (
     <TextField
         label={label}
