@@ -14,10 +14,10 @@ export const _cornerPathTranslate = {
 
 
 export const _lblTransform = {
-    "T": { angle: 0, x: 0, y: -1 },
-    "B": { angle: 0, x: 0, y: 1 },
-    "TL": { angle: -45, x: -1, y: -1 },
-    "TR": { angle: 45, x: 1, y: -1 },
-    "BR": { angle: -45, x: 1, y: 1 },
-    "BL": { angle: 45, x: -1, y: 1 },
+    "T": { angle: 0, x: 0, y: -1, diag:1 },
+    "B": { angle: 0, x: 0, y: 1, diag:1 },
+    "TL": { angle: -45, x: -1, y: -1, diag:Math.SQRT1_2 },
+    "TR": { angle: 45, x: 1, y: -1, diagn:Math.SQRT1_2 },
+    "BR": { angle: -45, x: 1, y: 1, diag:Math.SQRT1_2 },
+    "BL": { angle: 45, x: -1, y: 1, diag:Math.SQRT1_2 },
 };

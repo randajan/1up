@@ -17,16 +17,23 @@ const respondQrCode = async (ctx, config) => {
     const qrApi = await getRec("qrApis", apiToken, false);
     if (!qrApi) { ctx.status = 404; return; }
 
-    const [ style, isClosed, isExhausted, useCount ] = await qrApi.eval(["qrStyle","isClosed", "isExhausted", "useCount"]);
+    const e = await qrApi.eval(["qrStyle","isClosed", "useCount", "useLimit", "defaultType", "allowTypes", "defaultEcc", "strictEcc", "defaultLabel", "strictLabel"], { byKey:true });
 
-    if (!style) { ctx.status = 503; ctx.body = "Api definition missing required style"; return; }
-    if (isClosed) { ctx.status = 410; return; }
-    if (isExhausted) { ctx.status = 429; return; }
+    if (!e.qrStyle) { ctx.status = 503; ctx.body = "Api definition missing required style"; return; }
+    if (e.isClosed) { ctx.status = 410; return; }
+    if (e.useCount >= e.useLimit) { ctx.status = 429; return; }
+
+    const altp = e.allowTypes;
+    if (!config.contentType) { config.contentType = e.defaultType; }
+    if (altp.length && !altp.includes(config.contentType)) { ctx.status = 406; return; }
+
+    if (!config.ecc || e.strictEcc) { config.ecc = e.defaultEcc; }
+    if (!config.label || e.strictLabel) { config.label = e.defaultLabel; }
 
     try {
         
-        const r = await qrDraw(mime, style.key, config);
-        qrApi.update({useCount:useCount+1});
+        const r = await qrDraw(mime, e.qrStyle.key, config);
+        qrApi.update({useCount:e.useCount+1});
 
         ctx.body = r.body;
         ctx.type = r.mimeType;

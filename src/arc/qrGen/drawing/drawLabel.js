@@ -17,20 +17,19 @@ export const drawLabel = ({ _qr, svg, margin, rotator }) => {
     if (tfs.angle && rotator.straight) { return; }
 
     const scale = tfs.angle ? rotator.scale : 1;
-    const diagFactor = tfs.angle ? Math.SQRT1_2 : 1;
+    const gap = (margin - 1) * lblGap;
 
     const maxWidth = schema.size * scale;
-    const maxHeight = margin - lblGap - 1;
+    const maxHeight = (margin - 1) - gap;
     const bound = autosizeText(canvas, lbl, maxWidth, maxHeight, 1+lblScale);
 
     if (!bound) { return; }
 
-    const fontSize = bound.fontSize;
-    const baseShift = schema.sizeHalf * scale + lblGap + bound.height * 0.5;
+    const baseShift = (schema.sizeHalf + gap + bound.fontSize * 0.5) * scale;
     
-    const shift = baseShift * diagFactor;
-    const x = centerX + tfs.x * shift;
-    const y = centerY + tfs.y * shift;
+    const shift = baseShift * tfs.diag;
+    const x = centerX + shift * tfs.x;
+    const y = centerY + shift * tfs.y;
 
     const transform = tfs.angle ? `rotate(${tfs.angle} ${svg.s(x)} ${svg.s(y)})` : undefined;
 
@@ -39,6 +38,6 @@ export const drawLabel = ({ _qr, svg, margin, rotator }) => {
         transform,
         x,
         y,
-        "font-size": fontSize
+        "font-size": bound.fontSize
     }));
 };

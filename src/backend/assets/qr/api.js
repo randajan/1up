@@ -16,7 +16,7 @@ export const qrSerializeIssues = (items)=>{
     return items.map(qrSerializeIssue).join(",");
 }
 
-_types.set("svg", async (styleId, config) => {
+const qrDrawSVG = async (styleId, config) => {
     if (!config) { throw new Error("Missing config"); }
 
     const style = await getStyle(styleId);
@@ -30,10 +30,11 @@ _types.set("svg", async (styleId, config) => {
     else { r.body = QrGen.create({ canvas }).setStyle(style).setConfig(result).render(); }
 
     return r;
-})
+}
 
+_types.set("svg", qrDrawSVG);
 _types.set("png", async (styleId, body)=>{
-    const r = await resolveQrSvg(styleId, body);
+    const r = await qrDrawSVG(styleId, body);
     const resvg = new Resvg(r.body);
     r.body = resvg.render().asPng();
     r.mimeType = 'image/png';

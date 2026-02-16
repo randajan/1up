@@ -16,15 +16,20 @@ const createRawStyle = (current) => {
 
 const formatStyleState = (rawStyle) => {
     const collector = createFieldCollector();
-    return styleFields.format(rawStyle, {
+    const echo = {};
+    const r = styleFields.format(rawStyle, {
         collector,
         collect: (c, collected) => {
+            const { field, value } = collected;
+            if (!field.logic) { echo[field.id] = value; }
             pushCollectedToGroups(c, collected, (item) => ({
                 ...item,
                 useDefault: true
             }));
         }
     });
+    //console.log(JSON.stringify(echo)); for future save to DB
+    return r;
 };
 
 const scheduleInitialFormat = (run) => {

@@ -238,6 +238,7 @@
     "field.midFilter.label": ["Filtr středu", "Center filter"],
     "field.midImg.label": ["Obrázek středu", "Center image"],
     "field.midImgInject.label": ["Zkusit SVG injektáž", "Try SVG injection"],
+    "field.midSvgId.label": ["ID SVG injekce", "ID SVG injection"],
     "field.midImgSize.label": ["Velikost obrázku středu", "Center image size"],
     "field.midImgX.label": ["Posun obrázku X", "Center image offset X"],
     "field.midImgY.label": ["Posun obrázku Y", "Center image offset Y"],

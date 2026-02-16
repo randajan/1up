@@ -140,7 +140,7 @@ export const styleFields = new FieldRegistry("style", {
             "lblPos": { type: "enum", enm: getLblPosEnum, fb: "none", showIf: ({ padding }) => padding >= 0.1 },
             "lblValue": { type: "text", showIf: ({ lblPos }) => lblPos !== "none" },
             "lblScale":{ type:"range", min:-0.5, max:0.5, step:0.01, fb:0, showIf: ({ lblPos }) => (lblPos !== "none")  },
-            "lblGap": { type: "range", min: 0, max: 12, step: 0.1, fb: 1, showIf: ({ lblPos }) => (lblPos !== "none") },
+            "lblGap": { type: "range", min: 0, max: 0.9, step: 0.01, fb: 0.4, showIf: ({ lblPos }) => (lblPos !== "none") },
             "lblClass": { type: "text", fb: "lbl", showIf: ({ lblPos, mode }) => (lblPos !== "none" && mode === "modeExpert") },
             "lblFill": { type: "color", fb: ({ bitsFill }) => bitsFill, showIf: ({ lblPos }) => (lblPos !== "none") },
             "lblStrokeWidth": { type: "strokeWidth", fb: ({ bitsStrokeWidth }) => bitsStrokeWidth, showIf: ({ lblPos }) => (lblPos !== "none") },
