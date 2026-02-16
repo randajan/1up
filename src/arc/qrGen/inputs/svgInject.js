@@ -43,7 +43,7 @@ const extractSvg = (svgText) => {
 
 export const buildSvgInjection = (rawSvg, sanitizeSvgForInjection, symbolId = "midSvg") => {
     if (!rawSvg || typeof rawSvg !== "string") { return null; }
-    if (typeof sanitizeSvgForInjection !== "function") { return null; }
+    if (typeof sanitizeSvgForInjection !== "function") { sanitizeSvgForInjection = v=>v; }
 
     const decoded = rawSvg.trim().startsWith("data:") ? parseDataUrl(rawSvg) : rawSvg;
     if (!decoded) { return null; }
@@ -56,6 +56,5 @@ export const buildSvgInjection = (rawSvg, sanitizeSvgForInjection, symbolId = "m
 
     const { inner, viewBox } = extracted;
     const viewBoxAttr = viewBox ? ` viewBox="${viewBox}"` : "";
-    const defs = `<symbol id="${symbolId}"${viewBoxAttr}>${inner}</symbol>`;
-    return { defs, href: `#${symbolId}` };
+    return `<symbol id="${symbolId}"${viewBoxAttr}>${inner}</symbol>`;
 };

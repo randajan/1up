@@ -45,7 +45,7 @@ export class FieldRegistry {
         return Array.from(this.fields.values());
     }
 
-    normalize(input) {
+    normalize(input, opt={}) {
         const v = this._normalize(input);
         if (v && typeof v == "object" && !Array.isArray(v)) { return v; }
         throw new Error(`ContentModule '${this.id}' expects object input`);
@@ -55,9 +55,9 @@ export class FieldRegistry {
         const { collector, collect } = opt;
         const out = { computed:{}, issues:{}, input, collector };
 
-        const normalized = this.normalize(input);
+        const normalized = this.normalize(input, opt);
         for (const field of this.fields.values()) {
-            const r = field.collect(normalized[field.id], out);
+            const r = field.collect(normalized[field.id], out, opt);
             if (collect) { collect(collector, r); }
         }
 

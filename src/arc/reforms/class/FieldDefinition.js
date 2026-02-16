@@ -44,12 +44,12 @@ export class FieldDefinition {
         return [issues, pushIssue];
     }
 
-    collect(value, { computed, issues:iss }) {
+    collect(value, { computed, issues:iss }, opt={}) {
         const { id } = this;
         const [ issues, pushIssue ] = this.issuesFactory(iss);
 
         const rawValue = value;
-        const isShown = this.showIf(computed);
+        const isShown = this.showIf(computed, opt);
 
         if (!isShown) {
             if (value != null) { pushIssue("hidden", "minor"); }
@@ -59,7 +59,7 @@ export class FieldDefinition {
         }
 
         if (value == null) {
-            value = this.fb(computed);
+            value = this.fb(computed, opt);
             if (value != null) { pushIssue("fallback", "minor", value); }
         }
 

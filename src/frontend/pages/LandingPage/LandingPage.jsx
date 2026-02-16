@@ -1,11 +1,14 @@
-import React from "react";
+﻿import React from "react";
 import { Block } from "@randajan/jet-react/dom/block";
 import { Link } from "@randajan/jet-react/dom/link";
+import { Img } from "@randajan/jet-react/dom/img";
 
 import "./LandingPage.scss";
 
 const _pills = ["SVG/PNG", "BEZ REGISTRACE", "API"];
 const _swatches = ["is-dark", "is-green", "is-cyan", "is-blue"];
+
+import qrSvg from "./1up.svg";
 
 export const LandingPage = () => {
     return (
@@ -25,7 +28,7 @@ export const LandingPage = () => {
                     <h2>Vytvořit QR</h2>
                     <div className="LandingPage__cardBody">
                         <div className="LandingPage__qrMock" aria-hidden>
-                            <div className="LandingPage__qrCanvas" />
+                            <Img src={qrSvg}/>
                         </div>
                         <div className="LandingPage__cardContent">
                             <p>Styl, logo, barvy...</p>
@@ -42,6 +45,7 @@ export const LandingPage = () => {
                 </article>
 
                 <article className="LandingPage__card LandingPage__card--short">
+                    <span className="LandingPage__comingSoon">Připravujeme</span>
                     <h2>Zkrátit URL</h2>
                     <div className="LandingPage__inputs">
                         <div className="LandingPage__input">https://example.com/...</div>

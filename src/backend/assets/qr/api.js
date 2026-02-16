@@ -1,5 +1,5 @@
 import { Resvg } from "@resvg/resvg-js";
-import { getValue } from "../db/sugars";
+import { getRec, getValue } from "../db/sugars";
 import { configFields, QrGen } from "../../../arc/qrGen";
 import { createCanvas } from "canvas";
 import toSVG from "@randajan/js-object-view/svg";

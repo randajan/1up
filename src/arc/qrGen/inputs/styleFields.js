@@ -16,19 +16,7 @@ const getLblPosEnum = ({ rotation }) => {
 }
 
 export const styleFields = new FieldRegistry("style", {
-    format: ({ computed:style, issues }, { sanitizeSvgForInjection }) => {
-        const sanitize = (typeof sanitizeSvgForInjection === "function")
-            ? sanitizeSvgForInjection
-            : (svg => svg);
-
-        if (style?.midImgInject && style?.midImg) {
-            const injected = buildSvgInjection(style.midImg, sanitize);
-            if (injected) {
-                style.midSvgDefs = injected.defs;
-                style.midSvgHref = injected.href;
-            }
-        }
-
+    format: ({ computed:style }) => {
         return style;
     },
     define: sf => {
@@ -133,6 +121,8 @@ export const styleFields = new FieldRegistry("style", {
             "midMaskSize": { type: "range", fb: 0.8, step: 0.1, showIf: ({ mode, midMaskType }) => (mode !== "modeBasic" && midMaskType !== "none") },
             "midImg": { type: "file", accept: "image/*", showIf: ({ midMaskType }) => (midMaskType !== "none") },
             "midImgInject": { type: "boolean", showIf: ({ mode, midMaskType, midImg }) => (mode === "modeExpert" && midMaskType !== "none" && !!midImg) },
+            "midSvgId":{ type:"text", showIf:_=>({ midImgInject }) =>midImgInject, fb:"midSvg" },
+            "midSvgDefs":{ type:"text", showIf:_=>false, fb:({ midImg, midImgInject, midSvgId }, { sanitizeSvgForInjection })=>!midImgInject ? "" : buildSvgInjection(midImg, sanitizeSvgForInjection, midSvgId) },
             "midImgSize": { type: "range", min: 0.5, max: 2, step: 0.05, fb: 1, showIf: ({ midMaskType, midImg }) => (midMaskType !== "none" && !!midImg) },
             "midImgX": { type: "range", min: -0.5, max: 0.5, step: 0.01, fb: 0, showIf: ({ midMaskType, midImg }) => (midMaskType !== "none" && !!midImg) },
             "midImgY": { type: "range", min: -0.5, max: 0.5, step: 0.01, fb: 0, showIf: ({ midMaskType, midImg }) => (midMaskType !== "none" && !!midImg) },
@@ -143,7 +133,7 @@ export const styleFields = new FieldRegistry("style", {
             "midOpacity": { type: "opacity", showIf: ({ midImg }) => (!!midImg), fb: ({ bitsOpacity }) => bitsOpacity },
             "midFilter": { type: "textarea", showIf: ({ midImg, mode }) => (!!midImg && mode === "modeExpert"), fb: ({ bitsFilter }) => bitsFilter },
             "midCss": { type: "textarea", showIf: ({ midImg, mode }) => (!!midImg && mode === "modeExpert") },
-
+            
         });
 
         sf.defineFields("lbl", {

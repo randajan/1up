@@ -1,14 +1,14 @@
 import jet from "@randajan/jet-core";
 
 export default {
-  "id": { isPrimary: true, init: _ => jet.uid(32) },
+  "id": { isPrimary: true, init: _ => jet.uid(16) },
   "name": {},
   "desc": {},
   "style": { type:"object" },
   "isPublic": { type:"boolean" },
   "viewers": { ref:"sysUsers", separator:"; " },
   "editors": { ref:"ssysUsers", separator:"; " },
-  "owner": {},
+  "owner": { ref:"sysAccs" },
   "updatedAt": { type: "datetime", formula: _ => new Date() },
   "updatedBy": { ref: "sysUsers", display:1  },
   "createdAt": { type: "datetime", isReadonly:true, init: _ => new Date() },

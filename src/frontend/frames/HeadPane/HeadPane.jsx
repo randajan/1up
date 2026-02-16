@@ -12,9 +12,9 @@ export const HeadPane = () => {
                 </Link>
                 <nav className="HeadPane__nav" aria-label="Main">
                     <Link to="/qr/edit">QR</Link>
-                    <Link to="/short">Zkracovač</Link>
+                    {/* <Link to="/short">Zkracovač</Link>
                     <Link to="/templates">Šablony</Link>
-                    <Link to="/pricing">Ceník</Link>
+                    <Link to="/pricing">Ceník</Link> */}
                 </nav>
                 <div className="HeadPane__actions">
                     <Link to="/login" className="HeadPane__login">Přihlásit se</Link>

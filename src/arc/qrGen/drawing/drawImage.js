@@ -22,17 +22,17 @@ const getMidBox = ({ _qr, mask, margin, rotator }) => {
 const drawInjectedMidImage = (ctx) => {
     const { _qr, svg, mask, margin, rotator } = ctx;
     const { style } = _qr;
-    const { midMaskType, midImgInject, midSvgDefs, midSvgHref } = style;
+    const { midMaskType, midImgInject, midSvgDefs, midSvgId } = style;
 
     if (midMaskType === "none" || !mask.size) { return false; }
-    if (!midImgInject || !midSvgHref) { return false; }
+    if (!midImgInject || !midSvgId || !midSvgDefs) { return false; }
 
-    if (midSvgDefs) { svg.defs(midSvgDefs); }
-
+    svg.defs(midSvgDefs);
+    
     const { imgSize, offsetX, offsetY, imgPos } = getMidBox({ _qr, mask, margin, rotator });
     const midAttrs = formatInline("mid", style, { preserveAspectRatio: "xMidYMid meet" });
 
-    svg.use(midSvgHref, imgPos + offsetX, imgPos + offsetY, imgSize, imgSize, midAttrs);
+    svg.use(`#${midSvgId}`, imgPos + offsetX, imgPos + offsetY, imgSize, imgSize, midAttrs);
 
     return true;
 };

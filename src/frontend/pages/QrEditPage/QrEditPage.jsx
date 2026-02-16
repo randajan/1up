@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from "@mui/material";
 import { store } from "@randajan/jet-react/base/store";
 
 import "./QrEditPage.scss";
-import { QrGenerator } from "../LandingPage/QrGenerator/QrGenerator";
+import { QrGenerator } from "./QrGenerator/QrGenerator";
 import { say as sayMain } from "../../../arc/qrGen";
 
 store.acceptAll();

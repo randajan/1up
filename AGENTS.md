@@ -1,5 +1,7 @@
 # AGENTS.md — 1UP Conventions
 
+FILE IN PROJECT MUST BE EDITED VIA apply_patch, NEVER POWERSHELL
+
 ## Purpose
 This file defines the conventions for structure, style, and responsibility boundaries across the 1UP codebase.
 
