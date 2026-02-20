@@ -26,7 +26,7 @@ tab.fitType("slept", "Number");
 tab.fit((next, v)=>{
   v = Object.jet.tap(v);
 
-  v.title = jet.melt([v.h1, "QRB"], " | ");
+  v.title = jet.melt([v.h1, "1up"], " | ");
 
   clearTimeout(_int);
 

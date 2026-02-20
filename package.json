@@ -20,7 +20,7 @@
     "@randajan/js-object-view": "^3.2.0",
     "@randajan/odata-server": "^2.6.0",
     "@randajan/props": "^0.1.2",
-    "@randajan/pulse": "^1.1.3",
+    "@randajan/pulse": "^1.1.4",
     "@randajan/queue": "^1.0.0",
     "@randajan/ram-db": "^2.9.1",
     "@randajan/say": "^1.1.2",

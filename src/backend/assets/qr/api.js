@@ -46,3 +46,18 @@ export const qrDraw = async (mime, styleId, config)=>{
     if (resolver) { return resolver(styleId, config); }
     throw new Error(`Mimetype must be '${[..._types.keys()].join("' or '")}'`);
 }
+
+export const qrApiResetCounters = async ()=>{
+    const now = new Date();
+    const isNewWeek = now.getDate() === 1;
+    const isNewMonth = now.getDate() === 1;
+
+    const tbl = await db("qrApis");
+    return tbl.rows.map(async row=>{
+        const r = await row.eval(["countDay", "countWeek", "countMonth"], { byKey:true });
+        r.countDay = 0;
+        if (isNewWeek) { r.countWeek = 0; }
+        if (isNewMonth) { r.countMonth = 0; }
+        await row.update(r);
+    });
+}

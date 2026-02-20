@@ -3,10 +3,10 @@ import { koaBody } from "koa-body";
 import { qrDraw, qrSerializeIssues } from "../../../assets/qr/api";
 import { getRec } from "../../../assets/db/sugars";
 
-const setIssueHeaders = (ctx, issues = {})=>{
+const setIssueHeaders = (prefix, ctx, issues = {})=>{
     for (const level in issues) {
         const iss = qrSerializeIssues(issues[level]);
-        if (iss) { ctx.set(`x-qr-issues-${level}`, iss); }
+        if (iss) { ctx.set(`${prefix}-${level}`, iss); }
     }
 }
 
@@ -17,11 +17,20 @@ const respondQrCode = async (ctx, config) => {
     const qrApi = await getRec("qrApis", apiToken, false);
     if (!qrApi) { ctx.status = 404; return; }
 
-    const e = await qrApi.eval(["qrStyle","isClosed", "useCount", "useLimit", "defaultType", "allowTypes", "defaultEcc", "strictEcc", "defaultLabel", "strictLabel"], { byKey:true });
+    const e = await qrApi.eval([
+        "qrStyle","isClosed", 
+        "countDay", "countWeek", "countMonth",
+        "limitDay", "limitWeek", "limitMonth",
+        "defaultType", "allowTypes",
+        "defaultEcc", "strictEcc",
+        "defaultLabel", "strictLabel"
+    ], { byKey:true });
 
     if (!e.qrStyle) { ctx.status = 503; ctx.body = "Api definition missing required style"; return; }
     if (e.isClosed) { ctx.status = 410; return; }
-    if (e.useCount >= e.useLimit) { ctx.status = 429; return; }
+    if (e.countDay >= e.limitDay) { ctx.status = 429; ctx.body = "Exhausted day limit"; return; }
+    if (e.countWeek >= e.limitWeek) { ctx.status = 429; ctx.body = "Exhausted week limit"; return; }
+    if (e.countMonth >= e.limitMonth) { ctx.status = 429; ctx.body = "Exhausted month limit"; return; }
 
     const altp = e.allowTypes;
     if (!config.contentType) { config.contentType = e.defaultType; }
@@ -31,13 +40,12 @@ const respondQrCode = async (ctx, config) => {
     if (!config.label || e.strictLabel) { config.label = e.defaultLabel; }
 
     try {
-        
         const r = await qrDraw(mime, e.qrStyle.key, config);
-        qrApi.update({useCount:e.useCount+1});
+        qrApi.update({countDay:e.countDay+1, countWeek:e.countWeek+1, countMonth:e.countMonth+1});
 
         ctx.body = r.body;
         ctx.type = r.mimeType;
-        setIssueHeaders(ctx, r.issues);
+        setIssueHeaders("x-qr-issues", ctx, r.issues);
         ctx.set("Content-Disposition", `inline; filename="${fileName}.${mime}"`);
         ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         ctx.set('Pragma', 'no-cache');
