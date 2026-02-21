@@ -20,7 +20,7 @@ export default {
   "countMonth": { type:"number", init:0, noNull:true },
   "limitMonth": { type:"number" },
   "closedAt": { type:"datetime" },
-  "closedBy": { ref:"sysAccs" },
+  "closedBy": { ref:"sysUsers" },
   "updatedAt": { type: "datetime", formula: _ => new Date() },
   "updatedBy": { ref: "sysUsers", display:2  },
   "createdAt": { type: "datetime", isReadonly:true, init: _ => new Date() },
