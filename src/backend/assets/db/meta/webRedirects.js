@@ -20,7 +20,7 @@ export default {
   "closedAt":{ type:"datetime" },
   "closedBy": { ref:"sysUsers" },
   "updatedAt": { type: "datetime", formula: _ => new Date() },
-  "updatedBy": { ref: "sysUsers", display:1  },
+  "updatedBy": { ref: "sysUsers", display:2  },
   "createdAt": { type: "datetime", isReadonly:true, init: _ => new Date() },
-  "createdBy": { ref: "sysUsers", isReadonly:true, display: 1 },
+  "createdBy": { ref: "sysUsers", isReadonly:true, display:2 },
 };

@@ -34,5 +34,5 @@ configFields.defineFields("config", {
     ecc: { type: "enum", enm: ["L", "M", "Q", "H"], fb: "M", req:true },
     size: { type: "number", type: "number", min: 128, max: 8196, fb:1024, step: 1, isBackground:true },
     label: { type: "text", isBackground:true },
-    contentType: { type: "enum", enm: listModules().map(module => module.id), fb:"raw" }
+    contentType: { type: "enum", enm: listModules().map(module => module.id), fb:"url" }
 });

@@ -4,17 +4,17 @@ import { createQueue } from "@randajan/queue";
 import { configFields, getModule } from "../../../../../arc/qrGen";
 import { createFieldCollector, pushCollectedToGroups } from "../shared/collectFields";
 
-const resolveContentType = (value) => getModule(value)?.id ?? "raw";
+const resolveContentType = (value) => getModule(value)?.id ?? "url";
 
 const createEmptyFormatted = () => ({
     collector: createFieldCollector(),
     config: undefined,
-    contentType: "raw"
+    contentType: "url"
 });
 
 const createInitialRawState = (current) => {
     const baseConfig = current?.config ?? current;
-    const cfg = (baseConfig && typeof baseConfig === "object") ? baseConfig : { contentType: "raw" };
+    const cfg = (baseConfig && typeof baseConfig === "object") ? baseConfig : { contentType: "url" };
     const initialType = resolveContentType(cfg.contentType);
     const rawState = { ...cfg, contentType: initialType };
     const contentMap = (cfg && typeof cfg.content === "object" && !Array.isArray(cfg.content)) ? cfg.content : null;

@@ -29,7 +29,7 @@ export const presurePlate = (getKey = ()=>{}) => async (ctx, next) => {
 
   const accProm = e.isIgnored ? null : logAccess(e);
 
-  if (!env.redirect.debug) {
+  if (!env.fwd.debug) {
     ctx.status = e.status;
     if (e.status === 307) {
       ctx.body = `<html><script>location.replace("${e.redirectUrl}")</script><body><a href="${e.redirectUrl}">Click here</a></body></html>`;

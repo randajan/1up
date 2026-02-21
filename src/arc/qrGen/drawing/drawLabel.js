@@ -17,10 +17,10 @@ export const drawLabel = ({ _qr, svg, margin, rotator }) => {
     if (tfs.angle && rotator.straight) { return; }
 
     const scale = tfs.angle ? rotator.scale : 1;
-    const gap = (margin - 1) * lblGap;
+    const gap = (margin - 1.5) * lblGap;
 
     const maxWidth = schema.size * scale;
-    const maxHeight = (margin - 1) - gap;
+    const maxHeight = (margin - 1.5) - gap;
     const bound = autosizeText(canvas, lbl, maxWidth, maxHeight, 1+lblScale);
 
     if (!bound) { return; }

@@ -34,7 +34,7 @@ export const odata = odataServer(db, {
     returnVals:(context)=>context.returnVals,
     filter:async ({ auth, route, returnVals }, tbl, col)=>{
         if (!col) { return true; }
-        return col.display > 0;
+        return col.display > 1;
     }
 });
 
