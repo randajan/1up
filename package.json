@@ -1,6 +1,6 @@
 {
   "name": "1up",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "1up",
   "repository": "git@github.com:randajan/1up.git",
   "main": "index.js",
