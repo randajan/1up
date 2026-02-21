@@ -9,6 +9,8 @@ export default {
   "allowTypes":{ separator:"; " },
   "defaultEcc":{ init:"M" },
   "strictEcc":{ type:"boolean" },
+  "defaultSize":{},
+  "strictSize":{ type:"boolean" },
   "defaultLabel":{},
   "strictLabel":{ type:"boolean" },
   "countDay": { type:"number", init:0, noNull:true },

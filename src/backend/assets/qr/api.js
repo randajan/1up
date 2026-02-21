@@ -3,6 +3,7 @@ import { getRec, getValue } from "../db/sugars";
 import { configFields, QrGen } from "../../../arc/qrGen";
 import { createCanvas } from "canvas";
 import toSVG from "@randajan/js-object-view/svg";
+import db from "../db/ramdb";
 
 const _types = new Map();
 const canvas = createCanvas();
@@ -55,9 +56,10 @@ export const qrApiResetCounters = async ()=>{
     const tbl = await db("qrApis");
     return tbl.rows.map(async row=>{
         const r = await row.eval(["countDay", "countWeek", "countMonth"], { byKey:true });
+        if ((r.countDay + r.countWeek + r.countMonth) == 0) { return; }
         r.countDay = 0;
         if (isNewWeek) { r.countWeek = 0; }
         if (isNewMonth) { r.countMonth = 0; }
-        await row.update(r);
+        return row.update(r);
     });
 }

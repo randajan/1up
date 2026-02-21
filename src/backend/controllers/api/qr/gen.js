@@ -23,6 +23,7 @@ const respondQrCode = async (ctx, config) => {
         "limitDay", "limitWeek", "limitMonth",
         "defaultType", "allowTypes",
         "defaultEcc", "strictEcc",
+        "defaultSize", "strictSize",
         "defaultLabel", "strictLabel"
     ], { byKey:true });
 
@@ -37,6 +38,7 @@ const respondQrCode = async (ctx, config) => {
     if (altp.length && !altp.includes(config.contentType)) { ctx.status = 406; return; }
 
     if (!config.ecc || e.strictEcc) { config.ecc = e.defaultEcc; }
+    if (!config.size || e.strictSize) { config.size = e.defaultSize; }
     if (!config.label || e.strictLabel) { config.label = e.defaultLabel; }
 
     try {

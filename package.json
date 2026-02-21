@@ -1,8 +1,8 @@
 {
-  "name": "presure-plate",
+  "name": "1up",
   "version": "0.0.11",
-  "description": "presure-plate",
-  "repository": "git@github.com:randajan/fruhling.git",
+  "description": "1up",
+  "repository": "git@github.com:randajan/1up.git",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -29,6 +29,7 @@
     "@resvg/resvg-js": "^2.6.2",
     "canvas": "^3.2.1",
     "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "geoip-lite": "^1.4.10",
@@ -57,9 +58,9 @@
     "game",
     "destiny"
   ],
-  "homepage": "https://github.com/randajan/presure-plate",
+  "homepage": "https://github.com/randajan/1up",
   "bugs": {
-    "url": "https://github.com/randajan/presure-plate/issues"
+    "url": "https://github.com/randajan/1up/issues"
   },
   "author": {
     "name": "Jan Randa",
