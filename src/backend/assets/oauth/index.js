@@ -2,12 +2,11 @@ import info from "@randajan/simple-app/info";
 import env from "@randajan/simple-app/env";
 
 import createGrant from "@randajan/oauth2-client/google";
-import { getAcc } from "../db/sugars";
+import { getUser } from "../db/sugars";
 import db from "../db/ramdb";
 
-
 const pushAcc = async (oAcc) => {
-
+    
     const profile = await oAcc.profile();
     const tokens = await oAcc.tokens();
     const scopes = await oAcc.scopes();
@@ -16,17 +15,28 @@ const pushAcc = async (oAcc) => {
     const { email, name, picture } = profile;
     const { access_token, refresh_token, expiry_date } = tokens;
 
-    const user = await users.rows.addOrUpdate({
-        id:email,
-        name,
+    const grant = "google";
+    const grantId = email;
+
+    const u = {
         picture,
         scopesAccepted:scopes,
         tokenAccess: access_token,
         tokenRefresh: refresh_token,
         expiresAt: expiry_date
+    };
+
+    const current = await users.rows.find(async row=>{
+        if (grant !== await row("grant")) { return; }
+        if (grantId !== await row("grantId")) { return; }
+        return row;
     });
 
-    return user;
+    if (!current) { return users.rows.add({ ...u, name, grant, grantId, email }); }
+
+    await current.update(u);
+    return current;
+    
 }
 
 const onAuth = async (oAcc, { landingUri, state }) => {
@@ -42,7 +52,7 @@ const onAuth = async (oAcc, { landingUri, state }) => {
 }
 
 const getCredentials = async (email) => {
-    const user = await getAcc(`${email}`);
+    const user = await getUser(`${email}`);
     const [access_token, refresh_token, expiry_date] = await user.eval(["tokenAccess", "tokenRefresh", "expiresAt"]);
     return { access_token, refresh_token, expiry_date };
 }

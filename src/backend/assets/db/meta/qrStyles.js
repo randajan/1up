@@ -7,7 +7,7 @@ export default {
   "style": { type:"object", display:2 },
   "isPublic": { type:"boolean" },
   "viewers": { ref:"sysUsers", separator:"; " },
-  "editors": { ref:"ssysUsers", separator:"; " },
+  "editors": { ref:"sysUsers", separator:"; " },
   "owner": { ref:"sysUsers" },
   "updatedAt": { type: "datetime", formula: _ => new Date() },
   "updatedBy": { ref: "sysUsers", display:2  },

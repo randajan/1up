@@ -1,20 +1,11 @@
-const _supportedSubtypes = new Set(["textarea", "date", "color", "file", "url", "email", "range"]);
+import { resolveUiType } from "../Field/QrGeneratorField/fieldTypeMap";
 
-export const getFieldTypeId = (field) => {
-    if (!field) { return "text"; }
-    if (typeof field.type === "string") { return field.type; }
-    return field.type?.root?.id || field.type?.id || "text";
-};
 
-export const getFieldUiType = (field, rootId = getFieldTypeId(field)) => {
-    const subtype = field?.subtype;
-    if (subtype && _supportedSubtypes.has(subtype)) { return subtype; }
-    return rootId;
-};
+export const getFieldTypeId = (field) =>(field?.type?.root.id || "text")
 
 export const getFieldClass = (field) => {
     const type = getFieldTypeId(field);
-    const uiType = getFieldUiType(field, type);
+    const uiType = resolveUiType(field, type);
     const id = String(field?.id || "").toLowerCase();
 
     const classes = ["QrGenerator__field", `QrGenerator__field--${type}`];

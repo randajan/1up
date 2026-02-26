@@ -1,9 +1,4 @@
 export const _eccsRatio = { L: 0.25, M: 0.30, Q: 0.35, H: 0.40 };
-export const _levels = Object.keys(_eccsRatio);
-
-export const _cornersAttrs = ["radius", "type", "steps"];
-export const _cornersSides = ["TL", "TR", "BL", "BR"];
-export const _cornersZones = ["outer", "inner"];
 
 export const _cornerPathTranslate = {
     "ul": "TR", "rd": "TR",

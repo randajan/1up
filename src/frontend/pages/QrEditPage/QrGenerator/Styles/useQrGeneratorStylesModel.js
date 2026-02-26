@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createQueue } from "@randajan/queue";
 
-import { styleFields } from "../../../../../arc/qrGen";
 import { createFieldCollector, pushCollectedToGroups } from "../shared/collectFields";
+import { styleForm } from "@randajan/1up-api/4server";
+
 
 const createEmptyFormatted = () => ({
     collector: createFieldCollector(),
@@ -17,7 +18,7 @@ const createRawStyle = (current) => {
 const formatStyleState = (rawStyle) => {
     const collector = createFieldCollector();
     const echo = {};
-    const r = styleFields.format(rawStyle, {
+    const r = styleForm.format(rawStyle, {
         collector,
         collect: (c, collected) => {
             const { field, value } = collected;

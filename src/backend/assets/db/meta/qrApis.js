@@ -19,6 +19,7 @@ export default {
   "limitWeek": { type:"number" },
   "countMonth": { type:"number", init:0, noNull:true },
   "limitMonth": { type:"number" },
+  "owner":{ ref:"sysUsers" },
   "closedAt": { type:"datetime" },
   "closedBy": { ref:"sysUsers" },
   "updatedAt": { type: "datetime", formula: _ => new Date() },

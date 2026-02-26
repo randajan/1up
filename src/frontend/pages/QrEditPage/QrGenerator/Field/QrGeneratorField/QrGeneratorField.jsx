@@ -2,9 +2,9 @@ import React from "react";
 
 import "./QrGeneratorField.scss";
 
-import { formatIssue, getFieldTypeId, getFieldUiType } from "../../shared/fieldUi";
+import { formatIssue, getFieldTypeId } from "../../shared/fieldUi";
 import { resolveIssue } from "./fieldIssue";
-import { resolveTypeField } from "./fieldTypeMap";
+import { resolveUiField, resolveUiType } from "./fieldTypeMap";
 import { resolveFieldValue } from "./fieldValue";
 
 const resolveChangeHandler = ({ id, onChange, onFieldChange, fieldItem }) => (next) => {
@@ -46,26 +46,26 @@ export const QrGeneratorField = ({
 }) => {
     const { id, enm, min, max, step, placeholder } = field;
     const rootId = getFieldTypeId(field);
-    const uiType = getFieldUiType(field, rootId);
+    const uiType = resolveUiType(field, rootId);
     const resolvedEnm = typeof enm === "function" ? enm(computed ?? {}) : enm;
     const options = Array.isArray(resolvedEnm) ? resolvedEnm : [];
     const resolved = resolveFieldValue({ field, value, rawValue, useDefault, options, rootId, uiType });
 
     const issue = resolveIssue(issues, rawValue);
-    const issueLevel = issue?.level;
+    const issueSeverity = issue?.severity;
     const issueText = issue ? formatIssue(issue, say) : "";
     const resolvedHelperText = helperText ?? (
         issueText
-            ? <span className={`QrGenerator__helper QrGenerator__helper--${issueLevel || "minor"}`}>{issueText}</span>
+            ? <span className={`QrGenerator__helper QrGenerator__helper--${issueSeverity || "minor"}`}>{issueText}</span>
             : helperText
     );
 
-    const TypeField = resolveTypeField(uiType);
+    const UiField = resolveUiField(uiType);
     const baseProps = {
         label: say?.sayOr(`field.${id}.label`, id) || id,
         value: resolved,
         onChange: resolveChangeHandler({ id, onChange, onFieldChange, fieldItem }),
-        error: error ?? issueLevel === "critical",
+        error: error ?? issueSeverity === "critical",
         helperText: resolvedHelperText,
         placeholder,
         inputProps: resolveInputProps({ min, max, step, rootId }),
@@ -82,7 +82,7 @@ export const QrGeneratorField = ({
 
     return (
         <div key={id} className={className}>
-            <TypeField {...baseProps} />
+            <UiField {...baseProps} />
         </div>
     );
 };

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createQueue } from "@randajan/queue";
 
-import { configFields, getModule } from "../../../../../arc/qrGen";
+import { configForm, getContentForm } from "@randajan/1up-api/4server";
 import { createFieldCollector, pushCollectedToGroups } from "../shared/collectFields";
 
-const resolveContentType = (value) => getModule(value)?.id ?? "url";
+
+const resolveContentType = (value) => getContentForm(value)?.id ?? "url";
 
 const createEmptyFormatted = () => ({
     collector: createFieldCollector(),
@@ -29,7 +30,8 @@ const createInitialRawState = (current) => {
 
 const formatContentState = (rawState) => {
     const collector = createFieldCollector();
-    const config = configFields.format(rawState, {
+    const config = configForm.format(rawState, {
+        isEditor:true,
         collector,
         collect: (c, collected) => {
             pushCollectedToGroups(c, collected, (item) => ({
@@ -59,8 +61,8 @@ export const useQrGeneratorContentModel = ({ current, qrGen, onChange }) => {
     const formatAndApply = useCallback(() => {
         const out = formatContentState(rawStateRef.current);
         setFormatted(out);
-        if (!out?.config?.issues?.critical?.length) {
-            qrGen?.setConfig(out.config?.result);
+        if (!(out?.config?.issues.maxLevel >= 2)) {
+            qrGen?.setConfig(out.config.result);
         }
         onChange?.("config", rawStateRef.current);
     }, [onChange, qrGen]);

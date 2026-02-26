@@ -1,8 +1,8 @@
 import { Resvg } from "@resvg/resvg-js";
 import { getRec, getValue } from "../db/sugars";
-import { configFields, QrGen } from "../../../arc/qrGen";
+import { configForm } from "@randajan/1up-api/4server";
+import { QrGen } from "../../../arc/qrGen";
 import { createCanvas } from "canvas";
-import toSVG from "@randajan/js-object-view/svg";
 import db from "../db/ramdb";
 
 const _types = new Map();
@@ -23,13 +23,12 @@ const qrDrawSVG = async (styleId, config) => {
     const style = await getStyle(styleId);
     if (!style) { throw new Error(`Style not found`); }
     
-    const { result, issues } = configFields.format(config);
-    const r = {issues };
-    r.mimeType = 'image/svg+xml; charset=utf-8';
+    const { result, issues } = configForm.format(config);
+    const r = { issues, mimeType:'image/svg+xml; charset=utf-8' };
 
-    if (issues.critical) { r.body = toSVG(issues.critical.map(qrSerializeIssue)); }
-    else { r.body = QrGen.create({ canvas }).setStyle(style).setConfig(result).render(); }
+    if (issues.maxLevel >= 2) { return r; }
 
+    r.body = QrGen.create({ canvas }).setStyle(style).setConfig(result).render();
     return r;
 }
 

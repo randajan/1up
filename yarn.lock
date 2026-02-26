@@ -599,6 +599,14 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@randajan/1up-api@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@randajan/1up-api/-/1up-api-0.0.1.tgz#8448e8368685e36d058cb3549a1fc272bc1c289b"
+  integrity sha512-DfmvTiNAwC2bmUBMOLL8G1OnMQYn5KtpxHxSVYhARoejoFAgo/MEVYKXIyBKKZXWhgfiKG7Dvxbkc1vve0lRUA==
+  dependencies:
+    "@randajan/props" "^0.1.4"
+    node-fetch "^3.3.2"
+
 "@randajan/bifrost@^4.1.2":
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@randajan/bifrost/-/bifrost-4.1.2.tgz#f5aaa9f7983b9647647b5a6fbcc1b02f6292a622"
