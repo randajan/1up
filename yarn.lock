@@ -599,10 +599,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@randajan/1up-api@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@randajan/1up-api/-/1up-api-0.0.1.tgz#8448e8368685e36d058cb3549a1fc272bc1c289b"
-  integrity sha512-DfmvTiNAwC2bmUBMOLL8G1OnMQYn5KtpxHxSVYhARoejoFAgo/MEVYKXIyBKKZXWhgfiKG7Dvxbkc1vve0lRUA==
+"@randajan/1up-api@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@randajan/1up-api/-/1up-api-1.0.0.tgz#4e4fca9588cc344f29b1b9bbb02f9ccc6bbe2dbe"
+  integrity sha512-uh7YRb6Ib2KCnNJI6xBiWuu1eY2lwaXjor+y7ocK6+5pGiwzTvhK1SApw08BB/xoX+fkkCps7s73GGI+x44PVQ==
   dependencies:
     "@randajan/props" "^0.1.4"
     node-fetch "^3.3.2"

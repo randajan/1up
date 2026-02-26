@@ -12,7 +12,7 @@ export const db = ramdb("main", dbLoad, {
 db.on("afterSave", async (action, row)=>{
     const { table, saved } = row;
     const body = action === "remove" ? undefined : saved.raws;
-    delete body.id;
+    if (body) { delete body.id; }
     await fdb.get(table.name).write(saved.key, body);
 });
 

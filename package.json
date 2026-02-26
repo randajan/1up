@@ -12,7 +12,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.7",
     "@mui/x-date-pickers": "^8.27.0",
-    "@randajan/1up-api": "^0.0.1",
+    "@randajan/1up-api": "^1.0.0",
     "@randajan/bifrost": "^4.1.2",
     "@randajan/file-db": "^1.1.4",
     "@randajan/jet-base": "^2.3.2",
