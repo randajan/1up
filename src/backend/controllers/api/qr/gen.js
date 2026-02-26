@@ -1,6 +1,6 @@
 import { info } from "@randajan/simple-app/info";
 import { koaBody } from "koa-body";
-import { qrDraw, qrSerializeIssues } from "../../../assets/qr/api";
+import { qrDraw } from "../../../assets/qr/api";
 import { getRec } from "../../../assets/db/sugars";
 import { issuesSerialize } from "@randajan/1up-api/4server";
 
@@ -48,6 +48,7 @@ const respondQrCode = async (ctx, config) => {
         ctx.body = r.body;
         ctx.type = r.mimeType;
         setIssueHeaders("x-qr-issues-", ctx, r.issues);
+        ctx.set("x-qr-version", info.dependencies["@randajan/1up-api"]);
         ctx.set("Content-Disposition", `inline; filename="${fileName}.${mime}"`);
         ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
         ctx.set('Pragma', 'no-cache');

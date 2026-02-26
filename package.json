@@ -26,7 +26,7 @@
     "@randajan/queue": "^1.0.0",
     "@randajan/ram-db": "^2.9.1",
     "@randajan/say": "^1.1.2",
-    "@randajan/simple-app": "^6.2.9",
+    "@randajan/simple-app": "^6.2.10",
     "@randajan/vault-kit": "^3.4.1",
     "@resvg/resvg-js": "^2.6.2",
     "canvas": "^3.2.1",

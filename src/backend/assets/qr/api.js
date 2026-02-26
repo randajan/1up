@@ -10,13 +10,6 @@ const canvas = createCanvas();
 
 const getStyle = async (styleId)=>getValue("qrStyles", styleId, "style", false);
 
-const qrSerializeDetail = (detail)=>Array.isArray(detail) ? detail.join("|") : detail;
-export const qrSerializeIssue = ({ id, code, detail })=>`${id}:${code}${!detail?"":":"+qrSerializeDetail(detail)}`;
-export const qrSerializeIssues = (items)=>{
-    if (!Array.isArray(items) || items.length === 0) { return ""; }
-    return items.map(qrSerializeIssue).join(",");
-}
-
 const qrDrawSVG = async (styleId, config) => {
     if (!config) { throw new Error("Missing config"); }
 

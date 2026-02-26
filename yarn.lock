@@ -698,10 +698,10 @@
   dependencies:
     "@randajan/props" "^0.1.4"
 
-"@randajan/simple-app@^6.2.9":
-  version "6.2.9"
-  resolved "https://registry.yarnpkg.com/@randajan/simple-app/-/simple-app-6.2.9.tgz#744325704efea9f13d5a3c5a44113ac53ff8dc5a"
-  integrity sha512-2SgxmFFK2+XiJJ+wiGKZxG7BKskRnBV/mUZXvtzRUiOLEiIBQca1x6bTJjVY1w1ZpuQwUVsCCVsmoI7s8rvJUA==
+"@randajan/simple-app@^6.2.10":
+  version "6.2.10"
+  resolved "https://registry.yarnpkg.com/@randajan/simple-app/-/simple-app-6.2.10.tgz#018dde083839dfcb4076437d1dbaeed73e4057f5"
+  integrity sha512-DNBlk48300bh5w0vw3pqV8qurwPl/cUO7eqw4FH/nQ92vaS9FBgXjTfXWwpcO3XPCulfQh3TexjwU13X9m2c7w==
   dependencies:
     "@randajan/std-io" "^1.0.4"
     chalk "^5.3.0"
