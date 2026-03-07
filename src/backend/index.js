@@ -11,8 +11,9 @@ import Router from "koa-router";
 
 import "./init.js";
 // import "./bots/**";
-import "./cron/index.js";
+import "./cron";
 // import "./migration.js";
+import "./bifrost";
 import * as routes from "./controllers/**/*.js";
 
 

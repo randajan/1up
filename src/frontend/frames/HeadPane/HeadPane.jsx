@@ -2,8 +2,13 @@ import React from "react";
 import { Link } from "@randajan/jet-react/dom/link";
 
 import "./HeadPane.scss";
+import { useBeam } from "@randajan/bifrost/client/react";
+import { userBeam } from "../../config/bifrost";
 
 export const HeadPane = () => {
+    const { data:profile } = useBeam(userBeam);
+
+
     return (
         <header className="HeadPane">
             <section className="HeadPane__inner">
@@ -12,6 +17,7 @@ export const HeadPane = () => {
                 </Link>
                 <nav className="HeadPane__nav" aria-label="Main">
                     <Link to="/qr/edit">QR</Link>
+                    {profile?.name}
                     {/* <Link to="/short">Zkracovač</Link>
                     <Link to="/templates">Šablony</Link>
                     <Link to="/pricing">Ceník</Link> */}

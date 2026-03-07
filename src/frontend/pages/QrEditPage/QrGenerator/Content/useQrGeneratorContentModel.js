@@ -37,7 +37,7 @@ const formatContentState = (rawState) => {
             pushCollectedToGroups(c, collected, (item) => ({
                 ...item,
                 useDefault: true,
-                section: collected.section || "main"
+                section: collected.tag || "main"
             }));
         }
     });

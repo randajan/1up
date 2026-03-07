@@ -5,7 +5,8 @@ import createGrant from "@randajan/oauth2-client/google";
 import { getUser } from "../db/sugars";
 import db from "../db/ramdb";
 
-const pushAcc = async (oAcc) => {
+
+const pushUser = async (oAcc) => {
     
     const profile = await oAcc.profile();
     const tokens = await oAcc.tokens();
@@ -39,16 +40,17 @@ const pushAcc = async (oAcc) => {
     
 }
 
-const onAuth = async (oAcc, { landingUri, state }) => {
-    const acc = await pushAcc(oAcc);
+const onAuth = async (oAcc, { context:ctx, landingUri, state }) => {
+    const user = await pushUser(oAcc);
 
-    const [required, accepted] = await acc.eval(["scopesRequired", "scopesAccepted"]);
+    const [required, accepted] = await user.eval(["scopesRequired", "scopesAccepted"]);
     const missing = required.filter(v=>!accepted.includes(v));
 
     if (missing.length) {
         return oauth2Google.getInitAuthURL({ scopes:required, landingUri, state });
     }
-    
+
+    ctx.session.userId = user.key;
 }
 
 const getCredentials = async (email) => {
@@ -66,5 +68,5 @@ export const oauth2Google = createGrant({
     fallbackUri: env.home,
     getCredentials,
     onAuth,
-    onRenew:pushAcc,
+    onRenew:pushUser,
 });
