@@ -23,6 +23,8 @@ export const QrEditPage = () => {
         return say.setLang((lang === "cs" || lang === "en") ? lang : "en").defaultLang;
     }, [lang, say]);
 
+    
+
     useEffect(() => {
         const loadCurrent = () => setCurrent(store.get("$$qrGen") || {});
 

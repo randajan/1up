@@ -648,10 +648,10 @@
   resolved "https://registry.yarnpkg.com/@randajan/js-object-view/-/js-object-view-3.2.0.tgz#b6bcfd3624bc80cfb492146fe60d9893d3764bee"
   integrity sha512-fSsn/YasWMqqv9gJi3HFhq4GEUtAnU8c1vFHDmRAe5mbu1AfxoO5olcmvLW0MtVvyqX4wx0Oe8Nkp6pc9x0BbQ==
 
-"@randajan/koa-io-session@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@randajan/koa-io-session/-/koa-io-session-3.0.0.tgz#4e6b1c1b36b96c6bbb6c0f1bf45532af86c7828d"
-  integrity sha512-9sb6XN1nacJ8c0aatJTMkjf1Ah04FuMhbidqFPJXAK+JWo2o3qQsQ8jXyPBDL5/VSdz3XBGqN33pij8Tl/IcIw==
+"@randajan/koa-io-session@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@randajan/koa-io-session/-/koa-io-session-3.0.1.tgz#0f739179feacd812f1991359266b0c9b3466b6f3"
+  integrity sha512-z3ThAO8oJJOMsSzBRCuJ107+BJsIevr2cP8xEyDC4F1rhkEKFrsMe8JEwgHiLhNN46iAEzS17N39i1Li+Lx0oA==
   dependencies:
     "@randajan/props" "^0.1.4"
     crypto "^1.0.1"

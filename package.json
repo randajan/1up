@@ -19,7 +19,7 @@
     "@randajan/jet-core": "^4.1.0",
     "@randajan/jet-react": "^2.3.0",
     "@randajan/js-object-view": "^3.2.0",
-    "@randajan/koa-io-session": "^3.0.0",
+    "@randajan/koa-io-session": "^3.0.1",
     "@randajan/oauth2-client": "^1.0.0",
     "@randajan/odata-server": "^2.6.0",
     "@randajan/props": "^0.1.2",

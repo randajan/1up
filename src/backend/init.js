@@ -11,7 +11,6 @@ import { bridgeSession } from "@randajan/koa-io-session";
 import { FileStore } from "@randajan/koa-io-session/fdb";
 
 app.proxy = true;
-app.keys = env.session.keys;
 
 export const sessionBridge = bridgeSession(app, io, {
     ...env.session,
